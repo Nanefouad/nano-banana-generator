@@ -148,6 +148,52 @@ export const AIService = {
       throw new Error(creation.error || "Generation failed.");
     }
 
+    // Fallback: poll the external API if the webhook has not updated the database
+    const apiKey = config.ai.banana.apiKey;
+    if (apiKey) {
+      try {
+        const pollRes = await fetch(`https://api.muapi.ai/api/v1/predictions/${requestId}/result`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": apiKey
+          }
+        });
+
+        if (pollRes.ok) {
+          const pollJson = await pollRes.json();
+          const state = pollJson.status || pollJson.state;
+
+          if (state === "completed" || state === "succeeded") {
+            const outputs = pollJson.outputs || [];
+            const imageUrl = outputs[0] || (typeof pollJson.output === "string" ? pollJson.output : pollJson.output?.urls?.get);
+            if (imageUrl) {
+              const updated = await creationModel.update({
+                where: { id: creation.id },
+                data: {
+                  status: "completed",
+                  imageUrl
+                }
+              });
+              return { status: "completed", imageUrl: updated.imageUrl };
+            }
+          } else if (state === "failed") {
+            const errorMsg = pollJson.error || "Generation failed";
+            await creationModel.update({
+              where: { id: creation.id },
+              data: {
+                status: "failed",
+                error: errorMsg
+              }
+            });
+            throw new Error(errorMsg);
+          }
+        }
+      } catch (err) {
+        console.error("Error polling external status:", err);
+      }
+    }
+
     return { status: "processing" };
   }
 };
