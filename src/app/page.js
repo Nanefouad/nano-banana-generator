@@ -274,7 +274,7 @@ export default function Home() {
           {/* Prompt Section */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-foreground font-semibold flex items-center gap-2">
-              <div className="w-1 h-1 bg-primary-500 rounded-full" />{" "}
+              <div className="w-1 h-1 bg-primary rounded-full" />{" "}
               {mode === "generate" ? "Prompt" : "Edit Prompt"}
             </label>
             <textarea
@@ -285,7 +285,7 @@ export default function Home() {
                   ? "A cybernetic banana floating in space..."
                   : "Change the color of the banana to neon blue..."
               }
-              className="w-full h-32 bg-[var(--solid-bg)] bg-opacity-70 border border-glass-border rounded-lg p-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500/20 resize-none transition-all placeholder:text-muted/60 text-foreground drop-shadow-sm"
+              className="w-full h-32 bg-[var(--solid-bg)] bg-opacity-70 border border-glass-border rounded-lg p-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none transition-all placeholder:text-muted/60 text-foreground drop-shadow-sm"
             />
           </div>
 
@@ -297,7 +297,7 @@ export default function Home() {
               className="space-y-4"
             >
               <label className="text-xs font-medium text-foreground font-semibold flex items-center gap-2">
-                <div className="w-1 h-1 bg-primary-500 rounded-full" /> Reference
+                <div className="w-1 h-1 bg-primary rounded-full" /> Reference
                 Images ({imagesList.length}/14)
               </label>
 
@@ -308,7 +308,7 @@ export default function Home() {
                     value={newImageUrl}
                     onChange={(e) => setNewImageUrl(e.target.value)}
                     placeholder="Image URL..."
-                    className="flex-1 bg-glass-bg border border-glass-border rounded-lg px-3 py-2 text-[10px] font-bold outline-none focus:border-primary-500/50 text-foreground drop-shadow-sm"
+                    className="flex-1 bg-glass-bg border border-glass-border rounded-lg px-3 py-2 text-[10px] font-bold outline-none focus:border-primary/50 text-foreground drop-shadow-sm"
                   />
                   <input
                     type="file"
@@ -326,11 +326,11 @@ export default function Home() {
                       fileInputRef.current?.click();
                     }}
                     disabled={isUploading || imagesList.length >= 14}
-                    className="w-10 h-10 bg-primary-500/10 border border-primary-500/10 text-primary-500 rounded-lg flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all"
+                    className="w-10 h-10 bg-primary/10 border border-primary/10 text-primary rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all"
                     title="Upload Local File"
                   >
                     {isUploading ? (
-                      <div className="w-4 h-4 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <FaPlus className="text-lg group-hover:scale-110 transition-transform" />
                     )}
@@ -338,7 +338,7 @@ export default function Home() {
                   <button
                     onClick={addImageToList}
                     disabled={!newImageUrl || imagesList.length >= 14}
-                    className="w-10 h-10 bg-primary-50 border border-primary-100 text-primary-500 rounded-lg flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all shadow-sm"
+                    className="w-10 h-10 bg-primary/10 border border-primary/20 text-primary rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-sm"
                     title="Add URL"
                   >
                     <FaPlus />
@@ -368,7 +368,7 @@ export default function Home() {
           {/* Aspect Ratio */}
           <div className="space-y-3" ref={ratioRef}>
             <label className="text-xs font-medium text-foreground font-semibold flex items-center gap-2">
-              <div className="w-1 h-1 bg-primary-500 rounded-full" /> Aspect
+              <div className="w-1 h-1 bg-primary rounded-full" /> Aspect
               Ratio
             </label>
             <div className="relative">
@@ -377,7 +377,7 @@ export default function Home() {
                 className="w-full flex items-center justify-between p-3 bg-glass-bg border border-glass-border hover:bg-glass-hover shadow-sm rounded-lg text-xs font-semibold transition-all outline-none text-foreground backdrop-blur-md"
               >
                 <div className="flex items-center gap-3">
-                  <FaExpand className="text-primary-500" />
+                  <FaExpand className="text-primary" />
                   {aspectRatio.label}
                 </div>
                 <FaChevronDown
@@ -402,7 +402,7 @@ export default function Home() {
                         }}
                         className={`w-full text-left p-3 rounded-lg text-[10px] font-bold transition-all flex items-center gap-3 ${
                           aspectRatio.value === ratio.value
-                            ? "bg-primary-500 text-white shadow-md shadow-primary-500/20"
+                            ? "bg-primary text-white shadow-md shadow-primary/20"
                             : "text-muted hover:bg-glass-hover hover:text-foreground"
                         }`}
                       >
@@ -421,7 +421,7 @@ export default function Home() {
           {/* Tiered Resolution */}
           <div className="space-y-3">
             <label className="text-xs font-medium text-foreground font-semibold flex items-center gap-2">
-              <div className="w-1 h-1 bg-primary-500 rounded-full" /> Resolution
+              <div className="w-1 h-1 bg-primary rounded-full" /> Resolution
             </label>
             <div className="flex gap-2">
               {RESOLUTIONS.map((res) => (
@@ -430,7 +430,7 @@ export default function Home() {
                   onClick={() => setResolution(res)}
                   className={`flex-1 flex flex-col items-center py-3 rounded-lg border transition-all ${
                     resolution.value === res.value
-                      ? "bg-primary-500 border-primary-400 text-white shadow-lg shadow-primary-500/30"
+                      ? "bg-primary border-primary/50 text-white shadow-lg shadow-primary/30"
                       : "bg-glass-bg border-glass-border text-muted hover:bg-glass-hover hover:text-foreground"
                   }`}
                 >
@@ -450,14 +450,14 @@ export default function Home() {
           {/* Google Search */}
           <div className="space-y-3">
             <label className="text-xs font-medium text-foreground font-semibold flex items-center gap-2">
-              <div className="w-1 h-1 bg-primary-500 rounded-full" /> Google
+              <div className="w-1 h-1 bg-primary rounded-full" /> Google
               Search
             </label>
             <button
               onClick={() => setGoogleSearch(!googleSearch)}
               className={`w-full flex items-center justify-between p-3 rounded-xl border-2 transition-all ${
                 googleSearch
-                  ? "bg-primary-500 border-primary-400 text-white shadow-md"
+                  ? "bg-primary border-primary/50 text-white shadow-md"
                   : "bg-glass-bg border-glass-border text-muted hover:bg-glass-bg"
               }`}
             >
@@ -470,7 +470,7 @@ export default function Home() {
                 </span>
               </div>
               <div
-                className={`w-8 h-4 rounded-full relative p-1 transition-colors flex items-center ${googleSearch ? "bg-primary-500" : "bg-[var(--solid-bg)] border border-glass-border opacity-70"}`}
+                className={`w-8 h-4 rounded-full relative p-1 transition-colors flex items-center ${googleSearch ? "bg-primary" : "bg-[var(--solid-bg)] border border-glass-border opacity-70"}`}
               >
                 <motion.div
                   animate={{ x: googleSearch ? 14 : 0 }}
@@ -488,7 +488,7 @@ export default function Home() {
               (mode === "generate" && !prompt.trim()) ||
               (mode === "edit" && imagesList.length === 0)
             }
-            className="w-full bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-lg py-3.5 font-bold tracking-wider uppercase text-xs flex items-center justify-center gap-3 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 shadow-xl shadow-primary-500/30 border border-primary-400/50"
+            className="w-full bg-primary hover:bg-primary-hover text-white rounded-lg py-3.5 font-bold tracking-wider uppercase text-xs flex items-center justify-center gap-3 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 shadow-xl shadow-primary/30 border border-primary/50"
           >
             {loading ? (
               <div className="w-4 h-4 border-2 border-slate-500 border-t-white rounded-full animate-spin"></div>
@@ -503,8 +503,8 @@ export default function Home() {
       {/* Main Canvas */}
       <main className="flex-1 relative flex flex-col bg-transparent overflow-hidden min-h-[50vh] lg:min-h-0 shrink-0">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 w-[100%] h-[100%] bg-gradient-to-br from-primary-500/[0.03] to-secondary-500/[0.03]" />
-          <div className="absolute top-1/4 left-1/4 w-[60%] h-[60%] bg-primary-500/[0.12] rounded-full blur-[140px] animate-pulse" />
+          <div className="absolute top-0 left-0 w-[100%] h-[100%] bg-gradient-to-br from-primary/[0.03] to-secondary-500/[0.03]" />
+          <div className="absolute top-1/4 left-1/4 w-[60%] h-[60%] bg-primary/[0.12] rounded-full blur-[140px] animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-[50%] h-[50%] bg-secondary-500/[0.12] rounded-full blur-[120px]" />
         </div>
 
@@ -518,7 +518,7 @@ export default function Home() {
                 className="max-w-md w-full text-center space-y-8"
               >
                 <div className="relative w-28 h-28 mx-auto group">
-                  <div className="absolute inset-0 bg-primary-500/10 blur-[30px] rounded-full" />
+                  <div className="absolute inset-0 bg-primary/10 blur-[30px] rounded-full" />
                   <div className="relative w-full h-full bg-glass-bg border border-glass-border rounded-3xl flex items-center justify-center shadow-sm transition-transform duration-700 group-hover:rotate-12">
                     <FaMagic className="text-3xl text-slate-200" />
                   </div>
@@ -553,17 +553,17 @@ export default function Home() {
                       repeat: Infinity,
                       ease: "linear",
                     }}
-                    className="w-48 h-48 border-2 border-primary-500/10 rounded-full border-t-primary-500"
+                    className="w-48 h-48 border-2 border-primary/10 rounded-full border-t-primary"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <FaBolt className="text-primary-500 animate-pulse text-2xl" />
+                    <FaBolt className="text-primary animate-pulse text-2xl" />
                   </div>
                 </div>
                 <div className="text-center space-y-4">
                   <div className="text-2xl font-black italic uppercase animate-pulse text-foreground drop-shadow-sm">
                     {statusMessage}
                   </div>
-                  <div className="inline-block px-4 py-1.5 rounded-full bg-primary-50 text-primary-500 text-[9px] font-black uppercase tracking-widest">
+                  <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[9px] font-black uppercase tracking-widest">
                     ESTIMATED EXTRACTION: 120.0s
                   </div>
                 </div>
