@@ -20,6 +20,10 @@
   --color-glass-hover: var(--glass-hover, rgba(39, 39, 42, 0.8));
 }
 
+:root {
+  --solid-bg: #18181b;
+}
+
 /* Premium Visual Themes Override Definitions */
 [data-theme="cyberpunk"] {
   --bg-page: #05010a;
@@ -35,6 +39,7 @@
   --glass-bg: rgba(14, 5, 28, 0.7);
   --glass-border: rgba(236, 72, 153, 0.4);
   --glass-hover: rgba(27, 12, 50, 0.8);
+  --solid-bg: #0e051c;
 }
 
 [data-theme="emerald"] {
@@ -51,6 +56,7 @@
   --glass-bg: rgba(6, 78, 59, 0.7);
   --glass-border: rgba(17, 94, 89, 0.4);
   --glass-hover: rgba(15, 118, 110, 0.8);
+  --solid-bg: #064e3b;
 }
 
 [data-theme="sunset"] {
@@ -67,6 +73,7 @@
   --glass-bg: rgba(45, 21, 0, 0.7);
   --glass-border: rgba(234, 88, 12, 0.4);
   --glass-hover: rgba(69, 36, 0, 0.8);
+  --solid-bg: #2d1500;
 }
 
 [data-theme="midnight"] {
@@ -83,6 +90,7 @@
   --glass-bg: rgba(12, 12, 14, 0.7);
   --glass-border: rgba(45, 45, 52, 0.4);
   --glass-hover: rgba(30, 30, 36, 0.8);
+  --solid-bg: #0c0c0e;
 }
 
 .bg-primary {
