@@ -13,6 +13,8 @@
 
 > 🎨 **[Explore 50+ more open-source AI apps →](https://github.com/Anil-matcha/awesome-generative-ai-apps)**
 
+https://github.com/user-attachments/assets/8fedfcbe-b8e0-42e3-a67f-8e84b79c8f7b
+
 ## 🌐 Try the Live Engine
 
 **Hosted Demo:** [nano-banana-generator-psi.vercel.app](https://nano-banana-generator-psi.vercel.app)
