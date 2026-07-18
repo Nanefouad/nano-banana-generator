@@ -15,6 +15,10 @@
 
 https://github.com/user-attachments/assets/8fedfcbe-b8e0-42e3-a67f-8e84b79c8f7b
 
+## Related Projects
+
+- [awesome-ai-image-models](https://github.com/Anil-matcha/awesome-ai-image-models) — compare AI image models by API, price & quality
+
 ## 🌐 Try the Live Engine
 
 **Hosted Demo:** [nano-banana-generator-psi.vercel.app](https://nano-banana-generator-psi.vercel.app)
