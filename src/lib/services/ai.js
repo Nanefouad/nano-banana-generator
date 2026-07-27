@@ -5,9 +5,6 @@ import { prisma } from "@/lib/prisma";
 /**
  * Service to manage AI generations and interactions.
  */
-/**
- * Service to manage AI generations and interactions.
- */
 export const AIService = {
   /**
    * Calculate credit cost based on resolution
@@ -24,11 +21,15 @@ export const AIService = {
   /**
    * Execute a generation quest using muapi.ai
    */
-  async generate(userId, { prompt, aspect_ratio = "1:1", resolution = "1k", google_search = false }) {
-    const cost = this.getCreditCost(resolution);
-    await UserService.deductCredits(userId, cost);
+  async generate(userId, { prompt, aspect_ratio = "1:1", resolution = "1k", google_search = false, customApiKey = null }) {
+    const isUsingCustomKey = Boolean(customApiKey && customApiKey.trim().length > 0);
+    const cost = isUsingCustomKey ? 0 : this.getCreditCost(resolution);
 
-    const apiKey = config.ai.banana.apiKey;
+    if (!isUsingCustomKey && cost > 0) {
+      await UserService.deductCredits(userId, cost);
+    }
+
+    const apiKey = isUsingCustomKey ? customApiKey.trim() : config.ai.banana.apiKey;
     if (!apiKey) throw new Error("NANO_BANANA_API_KEY is not configured");
 
     const webhookUrl = `${config.auth.webhook_url}/api/webhook/muapi`;
@@ -76,11 +77,15 @@ export const AIService = {
   /**
    * Execute an edit quest using muapi.ai
    */
-  async edit(userId, { prompt, images_list = [], aspect_ratio = "Auto", google_search = false, resolution = "1k" }) {
-    const cost = this.getCreditCost(resolution);
-    await UserService.deductCredits(userId, cost);
+  async edit(userId, { prompt, images_list = [], aspect_ratio = "Auto", google_search = false, resolution = "1k", customApiKey = null }) {
+    const isUsingCustomKey = Boolean(customApiKey && customApiKey.trim().length > 0);
+    const cost = isUsingCustomKey ? 0 : this.getCreditCost(resolution);
 
-    const apiKey = config.ai.banana.apiKey;
+    if (!isUsingCustomKey && cost > 0) {
+      await UserService.deductCredits(userId, cost);
+    }
+
+    const apiKey = isUsingCustomKey ? customApiKey.trim() : config.ai.banana.apiKey;
     if (!apiKey) throw new Error("NANO_BANANA_API_KEY is not configured");
 
     const webhookUrl = `${config.auth.webhook_url}/api/webhook/muapi`;
@@ -128,7 +133,7 @@ export const AIService = {
   /**
    * Check status of a request and save to DB on completion
    */
-  async checkStatus(requestId, userId, metadata) {
+  async checkStatus(requestId, userId, metadata, customApiKey = null) {
     const creationModel = prisma.creation || prisma.Creation;
     if (!creationModel) return { status: "processing" };
 
@@ -149,7 +154,7 @@ export const AIService = {
     }
 
     // Fallback: poll the external API if the webhook has not updated the database
-    const apiKey = config.ai.banana.apiKey;
+    const apiKey = (customApiKey && customApiKey.trim().length > 0) ? customApiKey.trim() : config.ai.banana.apiKey;
     if (apiKey) {
       try {
         const pollRes = await fetch(`https://api.muapi.ai/api/v1/predictions/${requestId}/result`, {
