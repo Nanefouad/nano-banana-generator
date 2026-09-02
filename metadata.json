@@ -1,6 +1,6 @@
 {
   "name": "OpenImage",
-  "description": "OpenImage workspace powered creative image generator with visual canvas studio, aspect ratio matrix, gallery, and billing.",
+  "description": "OpenImage on image.soook.fr - creative image generator with visual canvas studio, aspect ratio matrix, gallery, and billing.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

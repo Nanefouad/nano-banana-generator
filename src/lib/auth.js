@@ -3,12 +3,17 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./prisma";
 
-// Ensure NEXTAUTH_URL uses the real container APP_URL rather than hardcoded localhost:3000
+export const CANONICAL_DOMAIN = "image.soook.fr";
+export const CANONICAL_URL = `https://${CANONICAL_DOMAIN}`;
+
+const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null;
+
+// Ensure NEXTAUTH_URL defaults to image.soook.fr, Vercel URL, or container APP_URL rather than localhost:3000
 if (
-  process.env.APP_URL &&
-  (!process.env.NEXTAUTH_URL || process.env.NEXTAUTH_URL.includes("localhost"))
+  !process.env.NEXTAUTH_URL ||
+  process.env.NEXTAUTH_URL.includes("localhost")
 ) {
-  process.env.NEXTAUTH_URL = process.env.APP_URL;
+  process.env.NEXTAUTH_URL = vercelUrl || process.env.APP_URL || CANONICAL_URL;
 }
 
 export const isGoogleConfigured = Boolean(

@@ -29,6 +29,9 @@ function LoginContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authStatus, setAuthStatus] = useState({
     googleConfigured: false,
+    canonicalDomain: "image.soook.fr",
+    canonicalUrl: "https://image.soook.fr",
+    canonicalCallbackUrl: "https://image.soook.fr/api/auth/callback/google",
     callbackUrl: "",
     devCallbackUrl: "",
     sharedCallbackUrl: "",
@@ -316,34 +319,64 @@ function LoginContent() {
                         <span className="font-semibold text-[#fafafa]">
                           2. Add Authorized Redirect URIs:
                         </span>
-                        <div className="space-y-1">
-                          <div className="flex items-center justify-between bg-[#18181b] p-2 rounded border border-[#2c2c31] font-mono text-[10px] break-all">
-                            <span>{authStatus.devCallbackUrl || `${authStatus.devOrigin}/api/auth/callback/google`}</span>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                handleCopy(
-                                  authStatus.devCallbackUrl ||
-                                    `${authStatus.devOrigin}/api/auth/callback/google`,
-                                  "dev"
-                                )
-                              }
-                              className="ml-2 text-[#87ea5c] hover:text-[#a2f280] shrink-0"
-                            >
-                              {copiedKey === "dev" ? (
-                                <Check className="w-3.5 h-3.5" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                            </button>
+                        <div className="space-y-1.5">
+                          {/* Primary Custom Domain: image.soook.fr */}
+                          <div className="bg-[#18181b] p-2 rounded border border-[#87ea5c]/30">
+                            <div className="flex items-center justify-between font-mono text-[10px] break-all">
+                              <span className="text-[#87ea5c] font-medium">{authStatus.canonicalCallbackUrl || "https://image.soook.fr/api/auth/callback/google"}</span>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleCopy(
+                                    authStatus.canonicalCallbackUrl ||
+                                      "https://image.soook.fr/api/auth/callback/google",
+                                    "canonical"
+                                  )
+                                }
+                                className="ml-2 text-[#87ea5c] hover:text-[#a2f280] shrink-0"
+                                title="Copy primary URI"
+                              >
+                                {copiedKey === "canonical" ? (
+                                  <Check className="w-3.5 h-3.5" />
+                                ) : (
+                                  <Copy className="w-3.5 h-3.5" />
+                                )}
+                              </button>
+                            </div>
+                            <span className="text-[9px] text-[#87ea5c]/80 block mt-0.5">Primary Domain (image.soook.fr)</span>
                           </div>
-                          {authStatus.sharedCallbackUrl && (
+
+                          {authStatus.devCallbackUrl && (
                             <div className="flex items-center justify-between bg-[#18181b] p-2 rounded border border-[#2c2c31] font-mono text-[10px] break-all">
-                              <span>{authStatus.sharedCallbackUrl}</span>
+                              <span className="text-[#a1a1aa]">{authStatus.devCallbackUrl}</span>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleCopy(
+                                    authStatus.devCallbackUrl,
+                                    "dev"
+                                  )
+                                }
+                                className="ml-2 text-[#87ea5c] hover:text-[#a2f280] shrink-0"
+                                title="Copy dev preview URI"
+                              >
+                                {copiedKey === "dev" ? (
+                                  <Check className="w-3.5 h-3.5" />
+                                ) : (
+                                  <Copy className="w-3.5 h-3.5" />
+                                )}
+                              </button>
+                            </div>
+                          )}
+
+                          {authStatus.sharedCallbackUrl && authStatus.sharedCallbackUrl !== authStatus.devCallbackUrl && (
+                            <div className="flex items-center justify-between bg-[#18181b] p-2 rounded border border-[#2c2c31] font-mono text-[10px] break-all">
+                              <span className="text-[#a1a1aa]">{authStatus.sharedCallbackUrl}</span>
                               <button
                                 type="button"
                                 onClick={() => handleCopy(authStatus.sharedCallbackUrl, "shared")}
                                 className="ml-2 text-[#87ea5c] hover:text-[#a2f280] shrink-0"
+                                title="Copy shared preview URI"
                               >
                                 {copiedKey === "shared" ? (
                                   <Check className="w-3.5 h-3.5" />

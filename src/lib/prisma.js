@@ -144,26 +144,36 @@ function createMockPrisma() {
   });
 }
 
-let prismaClient;
+function initPrismaClient() {
+  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.trim() === "") {
+    return createMockPrisma();
+  }
 
-if (!process.env.DATABASE_URL || process.env.DATABASE_URL.trim() === "") {
-  prismaClient = globalForPrisma.prisma || createMockPrisma();
-} else {
   try {
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    const isLocalhost =
+      process.env.DATABASE_URL.includes("localhost") ||
+      process.env.DATABASE_URL.includes("127.0.0.1");
+
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      max: process.env.NODE_ENV === "production" ? 10 : 5,
+      connectionTimeoutMillis: 10000,
+      idleTimeoutMillis: 30000,
+      ...(isLocalhost ? {} : { ssl: { rejectUnauthorized: false } }),
+    });
+
     const adapter = new PrismaPg(pool);
-    prismaClient =
-      globalForPrisma.prisma ||
-      new PrismaClient({
-        adapter,
-        log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-      });
+    return new PrismaClient({
+      adapter,
+      log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    });
   } catch (err) {
-    console.warn("[AI Studio] Failed to initialize Prisma client, falling back to mock:", err.message);
-    prismaClient = createMockPrisma();
+    console.warn("[Prisma] Failed to initialize Prisma client, falling back to in-memory store:", err.message);
+    return createMockPrisma();
   }
 }
 
-export const prisma = prismaClient;
+export const prisma = globalForPrisma.prisma || initPrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+// In serverless / Vercel environments, reusing prisma on globalThis avoids exhausting database connections
+globalForPrisma.prisma = prisma;

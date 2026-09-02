@@ -7,8 +7,15 @@ import config from "@/lib/config";
 const font = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL("https://image.soook.fr"),
   title: "OpenImage",
-  description: "OpenImage workspace powered creative image generator with visual canvas studio, aspect ratio matrix, gallery, and billing.",
+  description: "OpenImage on image.soook.fr - creative image generator with visual canvas studio, aspect ratio matrix, gallery, and billing.",
+  openGraph: {
+    title: "OpenImage",
+    description: "OpenImage on image.soook.fr - creative image generator with visual canvas studio, aspect ratio matrix, gallery, and billing.",
+    url: "https://image.soook.fr",
+    siteName: "OpenImage",
+  },
 };
 
 export default function RootLayout({ children }) {

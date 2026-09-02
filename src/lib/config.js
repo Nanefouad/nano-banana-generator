@@ -3,16 +3,36 @@
  * All environment variables are validated and exported from here.
  */
 
+const CANONICAL_DOMAIN = "image.soook.fr";
+const CANONICAL_URL = `https://${CANONICAL_DOMAIN}`;
+
+const resolveBaseUrl = () => {
+  if (process.env.NEXTAUTH_URL && !process.env.NEXTAUTH_URL.includes("localhost")) {
+    return process.env.NEXTAUTH_URL;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  if (process.env.APP_URL && !process.env.APP_URL.includes("localhost")) {
+    return process.env.APP_URL;
+  }
+  return CANONICAL_URL;
+};
+
+const baseUrl = resolveBaseUrl();
+
 const config = {
   appName: "OpenImage",
+  domain: CANONICAL_DOMAIN,
+  canonicalUrl: CANONICAL_URL,
   auth: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
     secret: process.env.NEXTAUTH_SECRET,
-    url: process.env.NEXTAUTH_URL || "http://localhost:3000",
-    webhook_url: process.env.WEBHOOK_URL || process.env.NEXTAUTH_URL || "http://localhost:3000",
+    url: baseUrl,
+    webhook_url: process.env.WEBHOOK_URL || baseUrl,
   },
   stripe: {
     publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
