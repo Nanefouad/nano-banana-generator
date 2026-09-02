@@ -7,12 +7,12 @@ import config from "@/lib/config";
 const font = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "NanoBanana 2.0 - Premium AI Generator",
-  description: "The next evolution of image generation templates.",
+  title: "OpenImage",
+  description: "OpenImage workspace powered creative image generator with visual canvas studio, aspect ratio matrix, gallery, and billing.",
 };
 
 export default function RootLayout({ children }) {
-  const theme = config?.theme || "slate-indigo";
+  const theme = config?.theme || "opendesign";
 
   return (
     <html lang="en" className="h-full w-full" data-theme={theme}>

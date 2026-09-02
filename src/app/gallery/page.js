@@ -4,17 +4,21 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  FaDownload,
-  FaMagic,
-  FaCalendarAlt,
-  FaExpandAlt,
-} from "react-icons/fa";
+  Download,
+  Sparkles,
+  Calendar,
+  Maximize2,
+  X,
+  Plus,
+  Clock,
+  Layers,
+  Archive,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { downloadImage } from "@/lib/utils";
-import { FiDownload } from "react-icons/fi";
 
 export default function CreationsPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [creations, setCreations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,115 +26,134 @@ export default function CreationsPage() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
     if (status === "authenticated") {
-      fetchCreations();
+      fetch("/api/creations")
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data) => {
+          if (isMounted) {
+            setCreations(Array.isArray(data) ? data : []);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching creations:", error);
+          if (isMounted) setLoading(false);
+        });
     } else if (status === "unauthenticated") {
       router.push("/");
     }
-  }, [status]);
-
-  const fetchCreations = async () => {
-    try {
-      const res = await fetch("/api/creations");
-      const data = await res.json();
-      if (res.ok) {
-        setCreations(data);
-      }
-    } catch (error) {
-      console.error("Error fetching creations:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    return () => {
+      isMounted = false;
+    };
+  }, [status, router]);
 
   if (status === "loading" || loading) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-transparent">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full drop-shadow-md"
-        />
+      <div className="flex-1 flex items-center justify-center bg-[#121214]">
+        <div className="w-8 h-8 border-2 border-[#87ea5c] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="flex-1 bg-transparent overflow-y-auto custom-scrollbar p-4 md:p-12">
-      <header className="max-w-7xl mx-auto mb-10 space-y-3 pt-4 md:pt-0">
-        <div className="flex items-center gap-3 text-primary mb-1">
-          <FaCalendarAlt className="text-sm" />
-          <span className="text-[10px] font-semibold uppercase tracking-[0.4em]">
-            Historical Archive
+    <div className="flex-1 opendesign-canvas-grid overflow-y-auto scrollbar-subtle p-4 md:p-10">
+      
+      {/* Gallery Header */}
+      <header className="max-w-7xl mx-auto mb-8 space-y-2">
+        <div className="flex items-center gap-2">
+          <Archive className="w-4 h-4 text-[#87ea5c]" />
+          <span className="text-[11px] font-mono font-medium text-[#87ea5c] uppercase tracking-wider">
+            Workspace Archive
           </span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-foreground">
-          MY CREATIONS
-        </h1>
-        <p className="text-muted font-medium text-xs uppercase tracking-widest leading-loose max-w-xl">
-          Your generative legacy, manifested and stored.{" "}
-          <br className="hidden md:block" />
-          Quick access to your visual nodes.
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#fafafa]">
+              Generated Artifacts
+            </h1>
+            <p className="text-xs text-[#a1a1aa] leading-relaxed">
+              Explore your past synthesized images, prompt parameters, and exported assets.
+            </p>
+          </div>
+          <button
+            onClick={() => router.push("/")}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg opendesign-btn-primary text-xs font-semibold self-start sm:self-auto cursor-pointer shadow-sm"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>New Generation</span>
+          </button>
+        </div>
       </header>
 
+      {/* Grid Content */}
       <div className="max-w-7xl mx-auto">
         {creations.length === 0 ? (
-          <div className="py-32 flex flex-col items-center justify-center text-center space-y-8">
-            <div className="w-20 h-20 rounded-3xl bg-glass-bg border border-glass-border flex items-center justify-center shadow-sm">
-              <FaMagic className="text-3xl text-muted" />
+          <div className="py-24 flex flex-col items-center justify-center text-center space-y-6">
+            <div className="w-16 h-16 rounded-2xl bg-[#18181b] border border-[#2c2c31] flex items-center justify-center shadow-md">
+              <Sparkles className="w-7 h-7 text-[#87ea5c]" />
             </div>
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold italic text-foreground">COLLECTION EMPTY</h3>
-              <button
-                onClick={() => router.push("/")}
-                className="px-8 py-3 bg-primary hover:bg-primary-hover text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-xl shadow-primary/20"
-              >
-                Start your first Manifestation
-              </button>
+            <div className="space-y-2 max-w-sm">
+              <h3 className="text-sm font-semibold text-[#fafafa]">No Artifacts in Archive</h3>
+              <p className="text-xs text-[#a1a1aa] leading-relaxed">
+                You haven&apos;t generated any images yet. Head over to the studio canvas to synthesize your first creation.
+              </p>
             </div>
+            <button
+              onClick={() => router.push("/")}
+              className="px-5 py-2.5 opendesign-btn-primary rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-sm"
+            >
+              Open Studio Canvas
+            </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             <AnimatePresence>
               {creations.map((item, index) => (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="group relative rounded-xl bg-glass-bg backdrop-blur-3xl border border-glass-border aspect-square cursor-pointer overflow-hidden shadow-sm hover:shadow-md transition-shadow transition-all"
+                  transition={{ delay: index * 0.04 }}
+                  className="group relative rounded-xl bg-[#18181b] border border-[#2c2c31] hover:border-[#3f3f46] aspect-square cursor-pointer overflow-hidden shadow-sm transition-all"
                   onClick={() => setSelectedImage(item)}
                 >
                   {item.status === "completed" ? (
                     <img
                       src={item.imageUrl}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      alt={item.prompt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      alt={item.prompt || "Artifact"}
                     />
                   ) : item.status === "failed" ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-red-500/10 gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center text-red-500 text-sm">
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-red-500/5 gap-2 text-center p-4">
+                      <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400 text-sm font-bold">
                         ✕
                       </div>
-                      <span className="text-[10px] font-black text-red-500 uppercase tracking-widest leading-none">Failed</span>
+                      <span className="text-[11px] font-semibold text-red-400">Failed</span>
                     </div>
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-glass-hover gap-4">
-                      <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                      <span className="text-[9px] font-black text-muted uppercase tracking-[0.2em] animate-pulse">Manifesting...</span>
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-[#1c1c20] gap-3">
+                      <div className="w-6 h-6 border-2 border-[#87ea5c] border-t-transparent rounded-full animate-spin" />
+                      <span className="text-[10px] font-mono text-[#a1a1aa] animate-pulse">Rendering...</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 p-4 flex flex-col justify-end">
-                    <p className="text-white text-xs font-semibold tracking-tight truncate mb-1">
-                      {item.prompt}
+
+                  {/* Hover Meta Bar */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+                    <p className="text-[#fafafa] text-xs font-medium truncate mb-2">
+                      {item.prompt || "Generated Artifact"}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-semibold text-primary uppercase tracking-widest">
-                        {item.aspectRatio}
-                      </span>
-                      <div className="w-8 h-8 rounded-lg bg-glass-bg backdrop-blur-3xl/10 backdrop-blur-md flex items-center justify-center text-white">
-                        <FaExpandAlt className="text-[10px]" />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#242429] text-[#a1a1aa] border border-[#3f3f46]">
+                          {item.aspectRatio || "1:1"}
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#242429] text-[#87ea5c] border border-[#3f3f46] uppercase">
+                          {item.resolution || "1k"}
+                        </span>
+                      </div>
+                      <div className="w-7 h-7 rounded-lg bg-[#242429] border border-[#3f3f46] flex items-center justify-center text-[#fafafa]">
+                        <Maximize2 className="w-3.5 h-3.5" />
                       </div>
                     </div>
                   </div>
@@ -141,140 +164,116 @@ export default function CreationsPage() {
         )}
       </div>
 
-      {/* Image Detail Modal */}
+      {/* Artifact Detail Modal */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] bg-bg-page/50 backdrop-blur-sm p-4 md:p-12 flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[1000] bg-black/85 backdrop-blur-md p-4 md:p-8 flex items-center justify-center"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.98, y: 10 }}
+              initial={{ opacity: 0, scale: 0.98, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              className="relative max-w-6xl w-full h-full bg-glass-bg backdrop-blur-3xl border border-glass-border rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl"
+              className="relative max-w-4xl w-full max-h-[90vh] bg-[#18181b] border border-[#2c2c31] rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Image Side */}
-              <div className="flex w-full md:w-[50%] h-[50%] md:h-full p-2 bg-glass-bg backdrop-blur-3xl flex border-b md:border-b-0 md:border-r border-glass-border">
+              {/* Image Preview */}
+              <div className="flex w-full md:w-3/5 bg-[#121214] items-center justify-center p-4 border-b md:border-b-0 md:border-r border-[#2c2c31] min-h-[300px]">
                 {selectedImage.status === "completed" ? (
                   <img
                     src={selectedImage.imageUrl}
-                    className="h-full w-full object-contain"
-                    alt="Creation"
+                    className="max-h-[70vh] w-auto h-auto object-contain rounded-lg"
+                    alt={selectedImage.prompt}
                   />
-                ) : selectedImage.status === "failed" ? (
-                  <div className="w-full h-full flex flex-col items-center justify-center bg-red-500/5 gap-4">
-                    <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-500 text-2xl">
-                      ✕
-                    </div>
-                    <div className="text-center space-y-2">
-                      <h3 className="text-sm font-bold text-red-500 uppercase tracking-widest">Generation Failed</h3>
-                      <p className="text-xs text-muted max-w-xs">{selectedImage.error || "An unknown error occurred during manifestation."}</p>
-                    </div>
-                  </div>
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center bg-glass-hover gap-6">
-                    <div className="relative">
-                      <div className="w-20 h-20 border-4 border-primary/10 border-t-primary rounded-full animate-spin" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <FaMagic className="text-primary/30 text-xl animate-pulse" />
-                      </div>
-                    </div>
-                    <div className="text-center space-y-2">
-                      <h3 className="text-sm font-black text-muted uppercase tracking-[0.3em] animate-pulse">Generating...</h3>
-                      <p className="text-[10px] text-muted italic">Sifting through digital entropy...</p>
-                    </div>
+                  <div className="text-center p-6 text-xs text-[#a1a1aa]">
+                    {selectedImage.status === "failed" ? "Generation failed." : "Processing artifact..."}
                   </div>
                 )}
               </div>
 
-              {/* Details Side */}
-              <div className="flex w-full md:w-[50%] h-[50%] md:h-full p-6 flex flex-col bg-glass-bg backdrop-blur-3xl overflow-y-auto custom-scrollbar">
-                <div className="flex flex-col justify-center space-y-4">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted">
-                      MANIFEST PARAMETERS
-                    </div>
-                    <p className="text-sm font-normal text-foreground leading-relaxed">
-                      {selectedImage.prompt}
+              {/* Inspector Pane */}
+              <div className="w-full md:w-2/5 p-6 flex flex-col justify-between overflow-y-auto scrollbar-subtle space-y-6">
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between border-b border-[#2c2c31] pb-3">
+                    <span className="text-[11px] font-mono font-medium text-[#87ea5c] uppercase">
+                      Artifact Details
+                    </span>
+                    <button
+                      onClick={() => setSelectedImage(null)}
+                      className="text-[#71717a] hover:text-[#fafafa] transition-colors cursor-pointer"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <span className="text-[10px] uppercase font-semibold text-[#71717a] tracking-wider">
+                      Prompt Brief
+                    </span>
+                    <p className="text-xs text-[#fafafa] leading-relaxed">
+                      {selectedImage.prompt || "No prompt stored"}
                     </p>
                   </div>
 
-                  <div className="space-y-6 border-t border-white/5 pt-10">
-                    <div className="grid grid-cols-2 gap-8">
-                      <div className="space-y-1.5">
-                        <div className="text-[9px] font-semibold text-muted uppercase tracking-widest">Ratio</div>
-                        <div className="text-xs text-foreground font-medium">{selectedImage.aspectRatio}</div>
-                      </div>
-                      <div className="space-y-1.5">
-                        <div className="text-[9px] font-semibold text-muted uppercase tracking-widest">Resolution</div>
-                        <div className="text-xs text-foreground font-medium">{selectedImage.resolution || "1k"}</div>
-                      </div>
+                  <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[#26262b]">
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-[#71717a] uppercase font-semibold flex items-center gap-1">
+                        <Layers className="w-3 h-3 text-[#87ea5c]" /> Ratio
+                      </span>
+                      <p className="text-xs text-[#fafafa] font-mono">{selectedImage.aspectRatio || "1:1"}</p>
                     </div>
-                    
-                    <div className="space-y-1.5">
-                      <div className="text-[9px] font-semibold text-muted uppercase tracking-widest">Timestamp</div>
-                      <div className="text-[11px] text-muted">
-                        {new Date(selectedImage.createdAt).toLocaleString('en-US', { 
-                          month: 'long', 
-                          day: 'numeric',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-[#71717a] uppercase font-semibold flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-[#87ea5c]" /> Resolution
+                      </span>
+                      <p className="text-xs text-[#fafafa] font-mono uppercase">{selectedImage.resolution || "1k"}</p>
                     </div>
+                  </div>
+
+                  <div className="space-y-1 pt-2 border-t border-[#26262b]">
+                    <span className="text-[10px] text-[#71717a] uppercase font-semibold flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-[#87ea5c]" /> Timestamp
+                    </span>
+                    <p className="text-xs text-[#a1a1aa]">
+                      {new Date(selectedImage.createdAt).toLocaleString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
                   </div>
                 </div>
 
-                <div className="pt-12">
+                <div className="pt-4 border-t border-[#26262b]">
                   <button
                     onClick={async () => {
                       if (selectedImage.status !== "completed") return;
                       setDownloading(true);
-                      await downloadImage(selectedImage.imageUrl, `nano-banana-${selectedImage.id}.jpg`);
+                      await downloadImage(selectedImage.imageUrl, `openimage-artifact-${selectedImage.id}.jpg`);
                       setDownloading(false);
                     }}
                     disabled={downloading || selectedImage.status !== "completed"}
-                    className="w-full py-3 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold tracking-wider uppercase text-xs flex items-center justify-center gap-3 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 shadow-xl shadow-primary/20 border border-primary/50"
+                    className="w-full py-2.5 opendesign-btn-primary rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer shadow-sm"
                   >
                     {downloading ? (
-                      <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin" />
                     ) : (
-                      <FiDownload size={16} />
+                      <Download className="w-3.5 h-3.5" />
                     )}
-                    {selectedImage.status === "completed" 
-                      ? (downloading ? "Extracting..." : "Download Piece")
-                      : selectedImage.status === "failed" 
-                        ? "Generation Failed" 
-                        : "Generating..."}
+                    <span>{downloading ? "Exporting..." : "Download Asset"}</span>
                   </button>
                 </div>
               </div>
-
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-colors"
-              >
-                <span className="text-xl">✕</span>
-              </button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 0px;
-        }
-        .custom-scrollbar {
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 }

@@ -4,7 +4,7 @@
  */
 
 const config = {
-  appName: "Nano Banana Template",
+  appName: "OpenImage",
   auth: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,

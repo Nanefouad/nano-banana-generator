@@ -6,17 +6,14 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full border-t border-divider/40 bg-bg-page py-6 text-center text-xs text-secondary-text mt-auto">
+    <footer className="w-full border-t border-[#26262b] bg-[#121214] py-6 text-center text-xs text-[#71717a] mt-auto">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          &copy; {currentYear} AI SaaS Studio. All rights reserved.
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c]" />
+          <span>&copy; {currentYear} OpenImage Studio • Nano Banana Engine</span>
         </div>
         <div className="flex gap-4">
-          <Link href="/terms" className="hover:text-primary-text transition-colors">
-            Terms of Service
-          </Link>
-          <span className="opacity-30">•</span>
-          <Link href="/privacy" className="hover:text-primary-text transition-colors">
+          <Link href="/privacy" className="hover:text-[#fafafa] transition-colors">
             Privacy Policy
           </Link>
         </div>

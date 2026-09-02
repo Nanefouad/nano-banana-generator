@@ -24,11 +24,10 @@ export default function Navbar() {
 
   const isApiKeyActive = Boolean(session?.user?.customApiKey);
 
-  useEffect(() => {
-    if (session?.user?.customApiKey) {
-      setApiKeyInput(session.user.customApiKey);
-    }
-  }, [session?.user?.customApiKey]);
+  const openApiKeyModal = () => {
+    setApiKeyInput(session?.user?.customApiKey || "");
+    setIsApiKeyModalOpen(true);
+  };
 
   const appMatch = pathname ? pathname.match(/^\/app\/([^\/]+)/) : null;
   const currentAppId = appMatch ? appMatch[1] : null;
@@ -106,81 +105,88 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-panel border-b border-divider/50 shadow-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 w-full bg-[#121214]/90 backdrop-blur-xl border-b border-[#26262b] shadow-sm">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         
-        {/* Logo and Brand Title */}
-        <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-[1.02] active:scale-95">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white font-extrabold text-lg shadow-md shadow-primary/30">
-            {logoLetter}
+        {/* OpenImage Logo and Brand Title */}
+        <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-90">
+          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[#18181b] border border-[#2c2c31] text-[#fafafa] shadow-inner">
+            {/* OpenImage geometric aperture glyph */}
+            <div className="w-3.5 h-3.5 border-2 border-[#87ea5c] rounded-[3px] rotate-45 relative flex items-center justify-center">
+              <div className="w-1 h-1 bg-[#87ea5c] rounded-full" />
+            </div>
+            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#87ea5c] rounded-full ring-2 ring-[#121214]" />
           </div>
-          <span className="text-lg font-black tracking-tight text-primary-text text-nowrap">
-            {appName}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-bold tracking-tight text-[#fafafa]">
+              OpenImage
+            </span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-[#202024] text-[#87ea5c] border border-[#2e2e33]">
+              Studio
+            </span>
+          </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6">
+        {/* Desktop Navigation Links — OpenDesign Segmented Control */}
+        <nav className="hidden md:flex items-center p-1 bg-[#18181b] border border-[#27272a] rounded-lg">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             return (
               <Link
                 key={link.name}
                 href={link.path}
-                className={`text-[13px] font-semibold transition-all relative py-1 ${
-                  isActive ? "text-primary" : "text-secondary-text hover:text-primary-text"
+                className={`text-xs font-medium px-3.5 py-1.5 rounded-md transition-all ${
+                  isActive
+                    ? "bg-[#27272a] text-[#fafafa] shadow-sm font-semibold"
+                    : "text-[#a1a1aa] hover:text-[#fafafa] hover:bg-[#202024]"
                 }`}
               >
                 {link.name}
-                {isActive && (
-                  <div className="absolute -bottom-[20px] left-0 right-0 h-0.5 bg-primary rounded-full" />
-                )}
               </Link>
             );
           })}
         </nav>
 
         {/* Desktop Actions Section */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2.5">
           
-          {/* Vercel Deploy Button */}
-          <a
-            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSamurAIGPT%2Fcommon-saas-template"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-full border border-divider px-4 py-1.5 text-xs font-bold text-secondary-text hover:text-primary-text hover:bg-bg-card transition-colors shadow-sm"
-          >
-            <SiVercel className="text-xs text-white" />
-            <span>Deploy</span>
-          </a>
-
-          {/* Add/Manage API Key - Directly visible in Navbar */}
+          {/* BYOK / API Key Status Pill — OpenDesign Signature BYOK affordance */}
           <button
-            onClick={() => setIsApiKeyModalOpen(true)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
+            onClick={openApiKeyModal}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
               isApiKeyActive
-                ? "bg-amber-500/10 border-amber-500/30 text-amber-400 hover:bg-amber-500/20"
-                : "bg-bg-page/50 border-divider text-secondary-text hover:text-white hover:border-primary/40"
+                ? "bg-[#18181b] border-[#87ea5c]/40 text-[#87ea5c] hover:bg-[#202024]"
+                : "bg-[#18181b] border-[#2c2c31] text-[#a1a1aa] hover:text-[#fafafa] hover:border-[#3f3f46]"
             }`}
           >
-            <FiKey className={isApiKeyActive ? "text-amber-400" : "text-secondary-text"} />
-            <span>{isApiKeyActive ? "Custom API Key" : "Add API Key"}</span>
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                isApiKeyActive ? "bg-[#87ea5c] animate-pulse" : "bg-[#71717a]"
+              }`}
+            />
+            <FiKey className="text-xs" />
+            <span>{isApiKeyActive ? "BYOK Direct Active" : "BYOK Key"}</span>
           </button>
 
           {status === "authenticated" ? (
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               {/* Credit Balance indicator */}
-              <div className="flex items-center h-9 border border-divider rounded-l bg-bg-page/30 overflow-hidden pr-2">
-                <span className="font-bold text-[13px] px-3 flex items-center text-primary-text gap-1">
-                  <FiDollarSign className="text-emerald-500 text-xs" />
-                  {isApiKeyActive ? "∞ (API Key)" : session.user.credits !== undefined ? session.user.credits : 0}
+              <div className="flex items-center h-8 border border-[#2c2c31] rounded-lg bg-[#18181b] px-3 gap-1.5 text-xs font-medium text-[#fafafa]">
+                <FiDollarSign className="text-[#87ea5c] text-xs" />
+                <span>
+                  {isApiKeyActive
+                    ? "Unlimited"
+                    : session.user.credits !== undefined
+                    ? `${session.user.credits} Credits`
+                    : "0 Credits"}
                 </span>
                 {!isApiKeyActive && (
                   <Link
                     href="/pricing"
-                    className="flex items-center justify-center w-5 h-5 rounded hover:bg-bg-card text-secondary-text transition-colors"
+                    className="ml-1 flex items-center justify-center w-4 h-4 rounded text-[#a1a1aa] hover:text-[#87ea5c] transition-colors"
+                    title="Add Credits"
                   >
-                    <FiPlus size={14} />
+                    <FiPlus size={12} />
                   </Link>
                 )}
               </div>
@@ -190,35 +196,35 @@ export default function Navbar() {
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   onBlur={() => setTimeout(() => setIsProfileOpen(false), 200)}
-                  className="h-9 w-9 flex items-center justify-center border-y border-r border-divider rounded-r bg-bg-page/30 hover:bg-bg-page transition-colors cursor-pointer"
+                  className="h-8 w-8 flex items-center justify-center border border-[#2c2c31] rounded-lg bg-[#18181b] hover:bg-[#202024] transition-colors cursor-pointer"
                 >
                   {session.user.image ? (
                     <img
                       src={session.user.image}
                       alt="Profile"
-                      className="h-6 w-6 rounded-full object-cover"
+                      className="h-5 w-5 rounded-full object-cover"
                     />
                   ) : (
-                    <FiUser className="text-secondary-text" size={16} />
+                    <FiUser className="text-[#a1a1aa]" size={14} />
                   )}
                 </button>
 
                 {/* Profile Dropdown */}
                 {isProfileOpen && (
-                  <div className="absolute right-0 top-11 w-52 rounded border border-divider bg-bg-card p-1 shadow-lg z-[100] animate-scale-up">
-                    <div className="px-3 py-2 text-xs text-secondary-text border-b border-divider/50 mb-1 truncate">
+                  <div className="absolute right-0 top-10 w-52 rounded-xl border border-[#2c2c31] bg-[#18181b] p-1.5 shadow-2xl z-[100] animate-scale-up">
+                    <div className="px-3 py-2 text-xs text-[#a1a1aa] border-b border-[#2c2c31] mb-1 truncate">
                       {session.user.email}
                     </div>
                     <button
-                      onClick={() => setIsApiKeyModalOpen(true)}
-                      className="flex w-full items-center gap-2 rounded px-3 py-2 text-left text-xs font-semibold text-primary-text hover:bg-primary/10 transition-colors"
+                      onClick={openApiKeyModal}
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-[#fafafa] hover:bg-[#242429] transition-colors"
                     >
-                      <FiKey size={14} className="text-amber-400" />
-                      <span>{isApiKeyActive ? "Manage API Key" : "Add API Key"}</span>
+                      <FiKey size={14} className="text-[#87ea5c]" />
+                      <span>{isApiKeyActive ? "Manage BYOK Key" : "Add BYOK Key"}</span>
                     </button>
                     <button
                       onClick={() => signOut({ callbackUrl: "/login" })}
-                      className="flex w-full items-center gap-2 rounded px-3 py-2 text-left text-xs font-semibold text-red-500 hover:bg-red-500/10 transition-colors"
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-red-400 hover:bg-red-500/10 transition-colors"
                     >
                       <FiLogOut size={14} />
                       <span>Sign Out</span>
@@ -230,7 +236,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="bg-primary text-white px-5 py-1.5 rounded-full text-sm font-bold hover:bg-primary-hover transition-all shadow-md shadow-primary/20"
+              className="bg-[#87ea5c] text-[#09090b] px-4 py-1.5 rounded-lg text-xs font-semibold hover:bg-[#78d84f] transition-all shadow-sm hover:shadow-[0_0_15px_rgba(135,234,92,0.3)]"
             >
               Sign In
             </Link>
@@ -240,15 +246,21 @@ export default function Navbar() {
         {/* Mobile Navbar Controls */}
         <div className="flex md:hidden items-center gap-2">
           {status === "authenticated" && (
-            <div className="flex items-center h-8 border border-divider rounded bg-bg-page/30 px-2.5 text-xs font-bold text-primary-text gap-0.5">
-              <FiDollarSign className="text-emerald-500 text-[10px]" />
-              {isApiKeyActive ? "∞ Key" : session.user.credits !== undefined ? session.user.credits : 0}
+            <div className="flex items-center h-8 border border-[#2c2c31] rounded-lg bg-[#18181b] px-2.5 text-xs font-medium text-[#fafafa] gap-1">
+              <FiDollarSign className="text-[#87ea5c] text-xs" />
+              <span>
+                {isApiKeyActive
+                  ? "∞"
+                  : session.user.credits !== undefined
+                  ? session.user.credits
+                  : 0}
+              </span>
             </div>
           )}
           
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="hover:bg-bg-card p-2 rounded cursor-pointer transition-colors text-primary-text border border-divider/50"
+            className="hover:bg-[#202024] p-1.5 rounded-lg cursor-pointer transition-colors text-[#fafafa] border border-[#2c2c31]"
             aria-label="Toggle Menu"
           >
             {isOpen ? <IoClose size={20} /> : <IoMenu size={20} />}
@@ -258,16 +270,16 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 z-[200] glass-dropdown border-b border-divider shadow-2xl py-4 px-6 md:hidden animate-fade-in">
+        <div className="absolute top-full left-0 right-0 z-[200] bg-[#18181b] border-b border-[#2c2c31] shadow-2xl py-4 px-6 md:hidden animate-fade-in">
           <nav className="flex flex-col gap-3">
-            <span className="text-[10px] uppercase font-bold text-secondary-text tracking-widest mb-1">Navigation</span>
+            <span className="text-[10px] uppercase font-bold text-[#71717a] tracking-widest mb-1">Navigation</span>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center py-2.5 rounded text-sm font-semibold transition-all ${
-                  pathname === link.path ? "bg-primary/10 text-primary px-3 border border-primary/20" : "text-primary-text hover:bg-bg-card"
+                className={`flex items-center py-2 px-3 rounded-lg text-xs font-semibold transition-all ${
+                  pathname === link.path ? "bg-[#27272a] text-[#87ea5c] border border-[#2c2c31]" : "text-[#fafafa] hover:bg-[#202024]"
                 }`}
               >
                 {link.name}
@@ -277,28 +289,17 @@ export default function Navbar() {
             <button
               onClick={() => {
                 setIsOpen(false);
-                setIsApiKeyModalOpen(true);
+                openApiKeyModal();
               }}
-              className="flex w-full items-center justify-between rounded border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-xs font-bold text-amber-400"
+              className="flex w-full items-center justify-between rounded-lg border border-[#2c2c31] bg-[#1c1c20] px-3 py-2.5 text-xs font-medium text-[#87ea5c]"
             >
               <div className="flex items-center gap-2">
                 <FiKey />
-                <span>{isApiKeyActive ? "Manage Custom API Key" : "Add API Key"}</span>
+                <span>{isApiKeyActive ? "Manage BYOK Key" : "Add BYOK Key"}</span>
               </div>
             </button>
 
-            <div className="h-px bg-divider/50 my-2" />
-
-            {/* Vercel Deploy in Mobile menu */}
-            <a
-              href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSamurAIGPT%2Fcommon-saas-template"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-full border border-divider py-3 text-xs font-bold text-secondary-text hover:text-primary-text hover:bg-bg-card transition-all"
-            >
-              <SiVercel className="text-xs text-white" />
-              <span>Clone & Deploy Template</span>
-            </a>
+            <div className="h-px bg-[#2c2c31] my-2" />
 
             {status === "authenticated" ? (
               <button
@@ -306,16 +307,16 @@ export default function Navbar() {
                   setIsOpen(false);
                   signOut({ callbackUrl: "/login" });
                 }}
-                className="flex w-full items-center justify-center gap-2 rounded bg-red-500/10 text-red-500 py-3 text-sm font-bold hover:bg-red-500/20 transition-all border border-red-500/20 mt-2"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500/10 text-red-400 py-2.5 text-xs font-semibold hover:bg-red-500/20 transition-all border border-red-500/20 mt-1"
               >
-                <FiLogOut size={16} />
+                <FiLogOut size={14} />
                 <span>Sign Out</span>
               </button>
             ) : (
               <Link
                 href="/login"
                 onClick={() => setIsOpen(false)}
-                className="flex w-full items-center justify-center rounded bg-primary text-white py-3 text-sm font-bold hover:bg-primary-hover transition-all shadow-md shadow-primary/20 mt-2"
+                className="flex w-full items-center justify-center rounded-lg bg-[#87ea5c] text-[#09090b] py-2.5 text-xs font-semibold hover:bg-[#78d84f] transition-all mt-1"
               >
                 Sign In
               </Link>
@@ -326,36 +327,36 @@ export default function Navbar() {
 
       {/* API Key Modal */}
       {isApiKeyModalOpen && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-bg-card border border-divider w-full max-w-md rounded-xl p-6 space-y-5 shadow-2xl animate-scale-up">
-            <div className="flex items-center justify-between border-b border-divider/60 pb-3">
-              <div className="flex items-center gap-2 text-amber-400 font-black text-sm uppercase">
-                <FiKey className="text-base" />
-                <span>Custom API Key Settings</span>
+        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+          <div className="bg-[#18181b] border border-[#2c2c31] w-full max-w-md rounded-2xl p-6 space-y-5 shadow-2xl animate-scale-up">
+            <div className="flex items-center justify-between border-b border-[#2c2c31] pb-3">
+              <div className="flex items-center gap-2 text-[#fafafa] font-semibold text-sm">
+                <div className="w-2 h-2 rounded-full bg-[#87ea5c]" />
+                <span>Bring Your Own Key (BYOK)</span>
               </div>
               <button
                 onClick={() => setIsApiKeyModalOpen(false)}
-                className="text-secondary-text hover:text-white transition-colors cursor-pointer"
+                className="text-[#71717a] hover:text-[#fafafa] transition-colors cursor-pointer"
               >
                 <FiX size={18} />
               </button>
             </div>
 
-            <p className="text-xs text-secondary-text leading-relaxed">
-              Use your own <strong>MuAPI Key</strong> to generate Nano Banana creations directly without consuming or purchasing website credits.
+            <p className="text-xs text-[#a1a1aa] leading-relaxed">
+              OpenImage allows using your own direct <strong>MuAPI / Banana Engine Key</strong>. Generations run with zero markup without exhausting platform credits.
             </p>
 
             <form onSubmit={handleSaveApiKey} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="block text-[11px] uppercase font-bold text-secondary-text tracking-wider">
-                  MuAPI Secret Key
+                <label className="block text-[11px] uppercase font-semibold text-[#71717a] tracking-wider">
+                  Engine Secret Key
                 </label>
                 <input
                   type="password"
                   value={apiKeyInput}
                   onChange={(e) => setApiKeyInput(e.target.value)}
                   placeholder="mu_..."
-                  className="w-full bg-bg-page border border-divider rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-secondary-text/50 focus:outline-none focus:border-amber-400 transition-colors"
+                  className="w-full bg-[#121214] border border-[#2c2c31] rounded-lg px-3.5 py-2 text-xs text-[#fafafa] placeholder-[#52525b] focus:outline-none focus:border-[#87ea5c] transition-colors"
                 />
               </div>
 
@@ -365,7 +366,7 @@ export default function Navbar() {
                     type="button"
                     onClick={handleRemoveApiKey}
                     disabled={savingKey}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 text-xs font-bold border border-red-500/20 transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium border border-red-500/20 transition-all cursor-pointer"
                   >
                     <FiTrash2 />
                     <span>Remove Key</span>
@@ -376,17 +377,17 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => setIsApiKeyModalOpen(false)}
-                    className="px-4 py-2 rounded-lg bg-bg-page border border-divider text-xs font-semibold text-secondary-text hover:text-white cursor-pointer"
+                    className="px-4 py-2 rounded-lg bg-[#202024] border border-[#2c2c31] text-xs font-medium text-[#a1a1aa] hover:text-[#fafafa] cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={savingKey || !apiKeyInput.trim()}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-neutral-950 text-xs font-bold transition-all disabled:opacity-50 cursor-pointer shadow-md shadow-amber-500/20"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#87ea5c] hover:bg-[#78d84f] text-[#09090b] text-xs font-semibold transition-all disabled:opacity-50 cursor-pointer shadow-sm hover:shadow-[0_0_15px_rgba(135,234,92,0.3)]"
                   >
                     <FiCheck />
-                    <span>{savingKey ? "Processing..." : status === "authenticated" ? "Save Key" : "Sign In with API Key"}</span>
+                    <span>{savingKey ? "Saving..." : status === "authenticated" ? "Save Key" : "Authenticate with Key"}</span>
                   </button>
                 </div>
               </div>
