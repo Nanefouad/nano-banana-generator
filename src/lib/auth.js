@@ -3,17 +3,97 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./prisma";
 
+// Ensure NEXTAUTH_URL uses the real container APP_URL rather than hardcoded localhost:3000
+if (
+  process.env.APP_URL &&
+  (!process.env.NEXTAUTH_URL || process.env.NEXTAUTH_URL.includes("localhost"))
+) {
+  process.env.NEXTAUTH_URL = process.env.APP_URL;
+}
+
+export const isGoogleConfigured = Boolean(
+  process.env.GOOGLE_CLIENT_ID &&
+  process.env.GOOGLE_CLIENT_SECRET &&
+  !process.env.GOOGLE_CLIENT_ID.includes("your_google_id") &&
+  !process.env.GOOGLE_CLIENT_SECRET.includes("your_google_secret") &&
+  !process.env.GOOGLE_CLIENT_ID.includes("placeholder") &&
+  process.env.GOOGLE_CLIENT_ID.trim().length > 15
+);
+
+const isHttps =
+  Boolean(process.env.APP_URL?.startsWith("https://")) ||
+  Boolean(process.env.NEXTAUTH_URL?.startsWith("https://")) ||
+  process.env.NODE_ENV === "production";
+
+const useSecureCookies = isHttps;
+const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
+  useSecureCookies,
+  cookies: {
+    sessionToken: {
+      name: `${cookiePrefix}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: useSecureCookies ? "none" : "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+    callbackUrl: {
+      name: `${cookiePrefix}next-auth.callback-url`,
+      options: {
+        sameSite: useSecureCookies ? "none" : "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+    csrfToken: {
+      name: useSecureCookies ? "__Host-next-auth.csrf-token" : "next-auth.csrf-token",
+      options: {
+        httpOnly: true,
+        sameSite: useSecureCookies ? "none" : "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+    pkceCodeVerifier: {
+      name: `${cookiePrefix}next-auth.pkce.code_verifier`,
+      options: {
+        httpOnly: true,
+        sameSite: useSecureCookies ? "none" : "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+    state: {
+      name: `${cookiePrefix}next-auth.state`,
+      options: {
+        httpOnly: true,
+        sameSite: useSecureCookies ? "none" : "lax",
+        path: "/",
+        secure: useSecureCookies,
+        maxAge: 900,
+      },
+    },
+  },
   providers: [
-    ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+    ...(isGoogleConfigured
       ? [
           GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            authorization: {
+              params: {
+                prompt: "select_account",
+                access_type: "offline",
+                response_type: "code",
+              },
+            },
           }),
         ]
       : []),
