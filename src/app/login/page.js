@@ -452,6 +452,16 @@ function LoginContent() {
             Keys and session tokens are strictly used for outbound model generations and stored in private sessions.
           </span>
         </div>
+
+        <div className="flex items-center justify-center gap-4 text-[11px] text-[#71717a] pt-1">
+          <a href="/privacy" className="hover:text-[#87ea5c] transition-colors underline">
+            Privacy Policy
+          </a>
+          <span>•</span>
+          <a href="/terms" className="hover:text-[#87ea5c] transition-colors underline">
+            Terms of Use
+          </a>
+        </div>
       </div>
     </div>
   );

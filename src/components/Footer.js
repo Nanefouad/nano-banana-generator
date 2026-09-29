@@ -10,11 +10,20 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c]" />
-          <span>&copy; {currentYear} OpenImage Studio • Nano Banana Engine</span>
+          <span>&copy; {currentYear} OpenImage Studio • image.soook.fr</span>
         </div>
-        <div className="flex gap-4">
-          <Link href="/privacy" className="hover:text-[#fafafa] transition-colors">
-            Privacy Policy
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[11px]">
+          <Link href="/gallery" className="hover:text-[#fafafa] transition-colors">
+            Galerie
+          </Link>
+          <Link href="/pricing" className="hover:text-[#fafafa] transition-colors">
+            Tarifs &amp; Crédits
+          </Link>
+          <Link href="/privacy" className="hover:text-[#87ea5c] transition-colors">
+            Politique de Confidentialité
+          </Link>
+          <Link href="/terms" className="hover:text-[#87ea5c] transition-colors">
+            Conditions d&apos;Utilisation
           </Link>
         </div>
       </div>
