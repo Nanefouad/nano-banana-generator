@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { downloadImage } from "@/lib/utils";
+import Footer from "@/components/Footer";
 
 export default function CreationsPage() {
   const { status } = useSession();
@@ -274,6 +275,7 @@ export default function CreationsPage() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Footer />
     </div>
   );
 }

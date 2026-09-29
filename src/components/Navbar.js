@@ -5,7 +5,7 @@ import { useSession, signOut, signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { IoClose, IoMenu } from "react-icons/io5";
-import { FiMoon, FiSun, FiLogOut, FiDollarSign, FiPlus, FiUser, FiKey, FiCheck, FiX, FiTrash2 } from "react-icons/fi";
+import { FiMoon, FiSun, FiLogOut, FiDollarSign, FiPlus, FiUser, FiKey, FiCheck, FiX, FiTrash2, FiShield, FiFileText } from "react-icons/fi";
 import { SiVercel } from "react-icons/si";
 import config from "@/lib/config";
 import toast from "react-hot-toast";
@@ -35,13 +35,15 @@ export default function Navbar() {
   const navLinks = currentAppId
     ? [
         { name: "Workspace", path: `/app/${currentAppId}` },
-        { name: "Gallery", path: `/app/${currentAppId}/gallery` },
-        { name: "Pricing", path: `/app/${currentAppId}/pricing` },
+        { name: "Galerie", path: `/app/${currentAppId}/gallery` },
+        { name: "Tarifs", path: `/app/${currentAppId}/pricing` },
       ]
     : [
         { name: "Workspace", path: "/" },
-        { name: "Gallery", path: "/gallery" },
-        { name: "Pricing", path: "/pricing" },
+        { name: "Galerie", path: "/gallery" },
+        { name: "Tarifs", path: "/pricing" },
+        { name: "Confidentialité", path: "/privacy" },
+        { name: "Conditions", path: "/terms" },
       ];
 
   const handleSaveApiKey = async (e) => {
@@ -222,6 +224,24 @@ export default function Navbar() {
                       <FiKey size={14} className="text-[#87ea5c]" />
                       <span>{isApiKeyActive ? "Manage BYOK Key" : "Add BYOK Key"}</span>
                     </button>
+                    <div className="h-px bg-[#2c2c31] my-1" />
+                    <Link
+                      href="/privacy"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] hover:bg-[#242429] transition-colors"
+                    >
+                      <FiShield size={14} className="text-[#87ea5c]" />
+                      <span>Confidentialité</span>
+                    </Link>
+                    <Link
+                      href="/terms"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] hover:bg-[#242429] transition-colors"
+                    >
+                      <FiFileText size={14} className="text-[#87ea5c]" />
+                      <span>Conditions d&apos;Usage</span>
+                    </Link>
+                    <div className="h-px bg-[#2c2c31] my-1" />
                     <button
                       onClick={() => signOut({ callbackUrl: "/login" })}
                       className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-red-400 hover:bg-red-500/10 transition-colors"

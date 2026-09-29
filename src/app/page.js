@@ -2,6 +2,7 @@
 
 import { useSession, signIn } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import {
   Sparkles,
   Wand2,
@@ -19,6 +20,8 @@ import {
   Sliders,
   X,
   Clock,
+  ShieldCheck,
+  FileText,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { downloadImage } from "@/lib/utils";
@@ -731,6 +734,46 @@ export default function Home() {
             </span>
           </button>
         </div>
+
+        {/* Sidebar Footer & Legal Links (SEO & Transparency) */}
+        <div className="px-5 py-3 border-t border-[#26262b] bg-[#141416] text-[11px] text-[#71717a]">
+          <div className="flex flex-wrap items-center justify-between gap-y-1">
+            <Link
+              href="/privacy"
+              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors"
+            >
+              Confidentialité
+            </Link>
+            <span className="text-[#3f3f46]">•</span>
+            <Link
+              href="/terms"
+              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors"
+            >
+              Conditions (CGU)
+            </Link>
+            <span className="text-[#3f3f46]">•</span>
+            <Link
+              href="/pricing"
+              className="text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
+            >
+              Tarifs
+            </Link>
+            <span className="text-[#3f3f46]">•</span>
+            <Link
+              href="/gallery"
+              className="text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
+            >
+              Galerie
+            </Link>
+          </div>
+          <div className="mt-2 pt-2 border-t border-[#222226] flex items-center justify-between text-[10px] text-[#52525b]">
+            <span>&copy; {new Date().getFullYear()} image.soook.fr</span>
+            <span className="flex items-center gap-1 text-[#87ea5c]/80">
+              <ShieldCheck className="w-3 h-3" />
+              <span>RGPD &amp; SSL</span>
+            </span>
+          </div>
+        </div>
       </aside>
 
       {/* Main Interactive Stage / Canvas (OpenDesign Grid) */}
@@ -835,6 +878,84 @@ export default function Home() {
                     <span>Try: Architecture in Neon Dusk</span>
                   </button>
                 </div>
+
+                {/* Direct Links & Transparency Matrix (Google SEO & Quick Navigation) */}
+                <div className="pt-5 border-t border-[#26262b]/80">
+                  <div className="flex items-center justify-between mb-2 px-0.5">
+                    <span className="text-[10px] uppercase font-bold text-[#71717a] tracking-wider">
+                      Navigation &amp; Informations Légales
+                    </span>
+                    <span className="text-[10px] text-[#87ea5c] font-medium flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c]" />
+                      image.soook.fr
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-left">
+                    <Link
+                      href="/privacy"
+                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <ShieldCheck className="w-4 h-4 text-[#87ea5c]" />
+                        <span className="text-[9px] font-mono font-medium text-[#87ea5c] bg-[#87ea5c]/10 px-1.5 py-0.5 rounded">
+                          RGPD
+                        </span>
+                      </div>
+                      <span className="text-xs font-semibold text-[#fafafa] group-hover:text-[#87ea5c] transition-colors leading-tight">
+                        Confidentialité
+                      </span>
+                      <span className="text-[10px] text-[#71717a] mt-0.5">Protection des données</span>
+                    </Link>
+
+                    <Link
+                      href="/terms"
+                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <FileText className="w-4 h-4 text-[#87ea5c]" />
+                        <span className="text-[9px] font-mono text-[#a1a1aa] bg-[#222226] px-1.5 py-0.5 rounded">
+                          CGU
+                        </span>
+                      </div>
+                      <span className="text-xs font-semibold text-[#fafafa] group-hover:text-[#87ea5c] transition-colors leading-tight">
+                        Conditions d&apos;Usage
+                      </span>
+                      <span className="text-[10px] text-[#71717a] mt-0.5">Droits &amp; Modalités</span>
+                    </Link>
+
+                    <Link
+                      href="/pricing"
+                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <Zap className="w-4 h-4 text-[#87ea5c]" />
+                        <span className="text-[9px] font-mono text-[#a1a1aa] bg-[#222226] px-1.5 py-0.5 rounded">
+                          Packs
+                        </span>
+                      </div>
+                      <span className="text-xs font-semibold text-[#fafafa] group-hover:text-[#87ea5c] transition-colors leading-tight">
+                        Tarifs &amp; Crédits
+                      </span>
+                      <span className="text-[10px] text-[#71717a] mt-0.5">Dès 5$ ou BYOK direct</span>
+                    </Link>
+
+                    <Link
+                      href="/gallery"
+                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <ImageIcon className="w-4 h-4 text-[#87ea5c]" />
+                        <span className="text-[9px] font-mono text-[#a1a1aa] bg-[#222226] px-1.5 py-0.5 rounded">
+                          Expo
+                        </span>
+                      </div>
+                      <span className="text-xs font-semibold text-[#fafafa] group-hover:text-[#87ea5c] transition-colors leading-tight">
+                        Galerie Visuelle
+                      </span>
+                      <span className="text-[10px] text-[#71717a] mt-0.5">Historique des rendus</span>
+                    </Link>
+                  </div>
+                </div>
               </motion.div>
             )}
 
@@ -929,6 +1050,45 @@ export default function Home() {
             )}
           </AnimatePresence>
         </div>
+
+        {/* Canvas Bottom Bar / Discoverability & Legal Bar */}
+        <footer className="relative z-20 w-full border-t border-[#26262b] bg-[#141417]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs text-[#71717a] shrink-0">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c]" />
+            <span className="text-[11px] font-medium text-[#a1a1aa]">
+              OpenImage Studio • image.soook.fr
+            </span>
+          </div>
+
+          <nav aria-label="Liens légaux et navigation" className="flex flex-wrap items-center gap-4 sm:gap-6 text-[11px]">
+            <Link
+              href="/gallery"
+              className="text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
+            >
+              Galerie
+            </Link>
+            <Link
+              href="/pricing"
+              className="text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
+            >
+              Tarifs &amp; Crédits
+            </Link>
+            <Link
+              href="/privacy"
+              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors font-medium flex items-center gap-1"
+            >
+              <ShieldCheck className="w-3 h-3 text-[#87ea5c]" />
+              Politique de Confidentialité
+            </Link>
+            <Link
+              href="/terms"
+              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors font-medium flex items-center gap-1"
+            >
+              <FileText className="w-3 h-3 text-[#87ea5c]" />
+              Conditions d&apos;Utilisation
+            </Link>
+          </nav>
+        </footer>
 
         {/* Fullscreen Modal Viewport */}
         {isFullscreen && resultUrl && (
