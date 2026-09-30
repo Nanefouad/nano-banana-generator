@@ -230,3 +230,197 @@
   box-shadow: 0 0 20px rgba(135, 234, 92, 0.28);
 }
 
+/* ========================================================
+   HeroUI (heroui.com / github.com/heroui-inc/heroui) System
+   ======================================================== */
+.heroui-card {
+  background-color: rgba(24, 24, 27, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.heroui-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.heroui-card-glow:hover {
+  border-color: rgba(135, 234, 92, 0.45);
+  box-shadow: 0 0 30px -5px rgba(135, 234, 92, 0.2), 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+.heroui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.heroui-btn:active {
+  transform: scale(0.97);
+}
+
+.heroui-btn:focus-visible {
+  box-shadow: 0 0 0 2px #121214, 0 0 0 4px #87ea5c;
+}
+
+.heroui-btn-solid-primary {
+  background-color: #87ea5c;
+  color: #09090b;
+  box-shadow: 0 4px 14px 0 rgba(135, 234, 92, 0.35);
+}
+
+.heroui-btn-solid-primary:hover {
+  background-color: #79de4e;
+  box-shadow: 0 6px 20px 0 rgba(135, 234, 92, 0.45);
+}
+
+.heroui-btn-flat {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.heroui-btn-flat:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.heroui-btn-bordered {
+  background-color: transparent;
+  color: #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.heroui-btn-bordered:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.heroui-btn-light {
+  background-color: transparent;
+  color: #a1a1aa;
+}
+
+.heroui-btn-light:hover {
+  color: #fafafa;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.heroui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.heroui-chip-primary {
+  background-color: rgba(135, 234, 92, 0.12);
+  color: #87ea5c;
+  border: 1px solid rgba(135, 234, 92, 0.28);
+}
+
+.heroui-chip-default {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.heroui-input {
+  width: 100%;
+  background-color: rgba(18, 18, 20, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.75rem;
+  color: #fafafa;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.heroui-input:focus {
+  border-color: #87ea5c;
+  box-shadow: 0 0 0 3px rgba(135, 234, 92, 0.2);
+}
+
+.heroui-input::placeholder {
+  color: #52525b;
+}
+
+.heroui-tabs {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  background-color: rgba(18, 18, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+}
+
+.heroui-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.heroui-tab:hover {
+  color: #fafafa;
+}
+
+.heroui-tab-active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fafafa;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.heroui-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.375rem;
+  font-size: 0.625rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.heroui-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background-color: rgba(18, 18, 20, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+

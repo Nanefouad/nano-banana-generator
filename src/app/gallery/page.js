@@ -79,7 +79,7 @@ export default function CreationsPage() {
           </div>
           <button
             onClick={() => router.push("/")}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg opendesign-btn-primary text-xs font-semibold self-start sm:self-auto cursor-pointer shadow-sm"
+            className="heroui-btn heroui-btn-solid-primary text-xs self-start sm:self-auto gap-2"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>New Generation</span>
@@ -91,7 +91,7 @@ export default function CreationsPage() {
       <div className="max-w-7xl mx-auto">
         {creations.length === 0 ? (
           <div className="py-24 flex flex-col items-center justify-center text-center space-y-6">
-            <div className="w-16 h-16 rounded-2xl bg-[#18181b] border border-[#2c2c31] flex items-center justify-center shadow-md">
+            <div className="w-16 h-16 rounded-2xl heroui-card flex items-center justify-center shadow-lg border border-white/15">
               <Sparkles className="w-7 h-7 text-[#87ea5c]" />
             </div>
             <div className="space-y-2 max-w-sm">
@@ -102,7 +102,7 @@ export default function CreationsPage() {
             </div>
             <button
               onClick={() => router.push("/")}
-              className="px-5 py-2.5 opendesign-btn-primary rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-sm"
+              className="heroui-btn heroui-btn-solid-primary text-xs py-2.5 px-5"
             >
               Open Studio Canvas
             </button>
@@ -116,7 +116,7 @@ export default function CreationsPage() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.04 }}
-                  className="group relative rounded-xl bg-[#18181b] border border-[#2c2c31] hover:border-[#3f3f46] aspect-square cursor-pointer overflow-hidden shadow-sm transition-all"
+                  className="group relative rounded-2xl heroui-card heroui-card-hover aspect-square cursor-pointer overflow-hidden shadow-sm transition-all"
                   onClick={() => setSelectedImage(item)}
                 >
                   {item.status === "completed" ? (
@@ -127,7 +127,7 @@ export default function CreationsPage() {
                     />
                   ) : item.status === "failed" ? (
                     <div className="w-full h-full flex flex-col items-center justify-center bg-red-500/5 gap-2 text-center p-4">
-                      <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400 text-sm font-bold">
+                      <div className="w-8 h-8 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 text-sm font-bold">
                         ✕
                       </div>
                       <span className="text-[11px] font-semibold text-red-400">Failed</span>
@@ -140,20 +140,20 @@ export default function CreationsPage() {
                   )}
 
                   {/* Hover Meta Bar */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
-                    <p className="text-[#fafafa] text-xs font-medium truncate mb-2">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+                    <p className="text-[#fafafa] text-xs font-semibold truncate mb-2">
                       {item.prompt || "Generated Artifact"}
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#242429] text-[#a1a1aa] border border-[#3f3f46]">
+                        <span className="heroui-chip heroui-chip-default text-[9px] py-0.2 px-1.5 font-mono">
                           {item.aspectRatio || "1:1"}
                         </span>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#242429] text-[#87ea5c] border border-[#3f3f46] uppercase">
+                        <span className="heroui-chip heroui-chip-primary text-[9px] py-0.2 px-1.5 font-mono uppercase">
                           {item.resolution || "1k"}
                         </span>
                       </div>
-                      <div className="w-7 h-7 rounded-lg bg-[#242429] border border-[#3f3f46] flex items-center justify-center text-[#fafafa]">
+                      <div className="w-7 h-7 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-[#fafafa]">
                         <Maximize2 className="w-3.5 h-3.5" />
                       </div>
                     </div>
@@ -260,7 +260,7 @@ export default function CreationsPage() {
                       setDownloading(false);
                     }}
                     disabled={downloading || selectedImage.status !== "completed"}
-                    className="w-full py-2.5 opendesign-btn-primary rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer shadow-sm"
+                    className="heroui-btn heroui-btn-solid-primary w-full py-2.5 text-xs font-semibold gap-2 disabled:opacity-50"
                   >
                     {downloading ? (
                       <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin" />

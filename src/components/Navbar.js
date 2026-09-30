@@ -107,14 +107,14 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#121214]/90 backdrop-blur-xl border-b border-[#26262b] shadow-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    <header className="heroui-navbar">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 sm:px-6 lg:px-8">
         
-        {/* OpenImage Logo and Brand Title */}
-        <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-90">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[#18181b] border border-[#2c2c31] text-[#fafafa] shadow-inner">
-            {/* OpenImage geometric aperture glyph */}
-            <div className="w-3.5 h-3.5 border-2 border-[#87ea5c] rounded-[3px] rotate-45 relative flex items-center justify-center">
+        {/* HeroUI Navbar Brand */}
+        <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-[0.98]">
+          <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#27272a] to-[#18181b] border border-white/10 text-[#fafafa] shadow-lg shadow-black/40">
+            {/* OpenImage aperture glyph */}
+            <div className="w-3.5 h-3.5 border-2 border-[#87ea5c] rounded-[4px] rotate-45 relative flex items-center justify-center">
               <div className="w-1 h-1 bg-[#87ea5c] rounded-full" />
             </div>
             <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#87ea5c] rounded-full ring-2 ring-[#121214]" />
@@ -123,25 +123,21 @@ export default function Navbar() {
             <span className="text-sm font-bold tracking-tight text-[#fafafa]">
               OpenImage
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-[#202024] text-[#87ea5c] border border-[#2e2e33]">
+            <span className="heroui-chip heroui-chip-primary text-[10px] py-0.5 px-2">
               Studio
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation Links — OpenDesign Segmented Control */}
-        <nav className="hidden md:flex items-center p-1 bg-[#18181b] border border-[#27272a] rounded-lg">
+        {/* Desktop Navigation Links — HeroUI Segmented Tabs Control */}
+        <nav className="hidden md:flex heroui-tabs">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             return (
               <Link
                 key={link.name}
                 href={link.path}
-                className={`text-xs font-medium px-3.5 py-1.5 rounded-md transition-all ${
-                  isActive
-                    ? "bg-[#27272a] text-[#fafafa] shadow-sm font-semibold"
-                    : "text-[#a1a1aa] hover:text-[#fafafa] hover:bg-[#202024]"
-                }`}
+                className={`heroui-tab ${isActive ? "heroui-tab-active" : "heroui-tab-inactive"}`}
               >
                 {link.name}
               </Link>
@@ -152,14 +148,14 @@ export default function Navbar() {
         {/* Desktop Actions Section */}
         <div className="hidden md:flex items-center gap-2.5">
           
-          {/* BYOK / API Key Status Pill — OpenDesign Signature BYOK affordance */}
+          {/* BYOK / API Key HeroUI Button */}
           <button
             onClick={openApiKeyModal}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+            className={`heroui-btn ${
               isApiKeyActive
-                ? "bg-[#18181b] border-[#87ea5c]/40 text-[#87ea5c] hover:bg-[#202024]"
-                : "bg-[#18181b] border-[#2c2c31] text-[#a1a1aa] hover:text-[#fafafa] hover:border-[#3f3f46]"
-            }`}
+                ? "heroui-btn-flat !border-[#87ea5c]/40 text-[#87ea5c] hover:!border-[#87ea5c]"
+                : "heroui-btn-bordered text-[#a1a1aa] hover:text-[#fafafa]"
+            } text-xs py-1.5 px-3 gap-2`}
           >
             <span
               className={`w-1.5 h-1.5 rounded-full ${
@@ -172,8 +168,8 @@ export default function Navbar() {
 
           {status === "authenticated" ? (
             <div className="flex items-center gap-2">
-              {/* Credit Balance indicator */}
-              <div className="flex items-center h-8 border border-[#2c2c31] rounded-lg bg-[#18181b] px-3 gap-1.5 text-xs font-medium text-[#fafafa]">
+              {/* Credit Balance indicator — HeroUI Chip Style */}
+              <div className="flex items-center h-8 border border-white/10 rounded-xl bg-[#18181b]/80 px-3 gap-1.5 text-xs font-semibold text-[#fafafa] shadow-inner">
                 <FiDollarSign className="text-[#87ea5c] text-xs" />
                 <span>
                   {isApiKeyActive
@@ -198,37 +194,37 @@ export default function Navbar() {
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   onBlur={() => setTimeout(() => setIsProfileOpen(false), 200)}
-                  className="h-8 w-8 flex items-center justify-center border border-[#2c2c31] rounded-lg bg-[#18181b] hover:bg-[#202024] transition-colors cursor-pointer"
+                  className="h-8 w-8 flex items-center justify-center border border-white/10 rounded-xl bg-[#18181b] hover:bg-[#27272a] transition-colors cursor-pointer ring-offset-2 ring-offset-[#121214] focus:ring-2 focus:ring-[#87ea5c]"
                 >
                   {session.user.image ? (
                     <img
                       src={session.user.image}
                       alt="Profile"
-                      className="h-5 w-5 rounded-full object-cover"
+                      className="h-6 w-6 rounded-full object-cover"
                     />
                   ) : (
                     <FiUser className="text-[#a1a1aa]" size={14} />
                   )}
                 </button>
 
-                {/* Profile Dropdown */}
+                {/* Profile Dropdown — HeroUI Popover Menu */}
                 {isProfileOpen && (
-                  <div className="absolute right-0 top-10 w-52 rounded-xl border border-[#2c2c31] bg-[#18181b] p-1.5 shadow-2xl z-[100] animate-scale-up">
-                    <div className="px-3 py-2 text-xs text-[#a1a1aa] border-b border-[#2c2c31] mb-1 truncate">
+                  <div className="absolute right-0 top-10 w-56 heroui-card heroui-popover p-2 z-[100] animate-scale-up">
+                    <div className="px-3 py-2 text-xs text-[#a1a1aa] border-b border-white/10 mb-1 truncate">
                       {session.user.email}
                     </div>
                     <button
                       onClick={openApiKeyModal}
-                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-[#fafafa] hover:bg-[#242429] transition-colors"
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-[#fafafa] hover:bg-white/10 transition-colors"
                     >
                       <FiKey size={14} className="text-[#87ea5c]" />
                       <span>{isApiKeyActive ? "Manage BYOK Key" : "Add BYOK Key"}</span>
                     </button>
-                    <div className="h-px bg-[#2c2c31] my-1" />
+                    <div className="h-px bg-white/10 my-1" />
                     <Link
                       href="/privacy"
                       onClick={() => setIsProfileOpen(false)}
-                      className="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] hover:bg-[#242429] transition-colors"
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] hover:bg-white/10 transition-colors"
                     >
                       <FiShield size={14} className="text-[#87ea5c]" />
                       <span>Confidentialité</span>
@@ -236,12 +232,12 @@ export default function Navbar() {
                     <Link
                       href="/terms"
                       onClick={() => setIsProfileOpen(false)}
-                      className="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] hover:bg-[#242429] transition-colors"
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] hover:bg-white/10 transition-colors"
                     >
                       <FiFileText size={14} className="text-[#87ea5c]" />
                       <span>Conditions d&apos;Usage</span>
                     </Link>
-                    <div className="h-px bg-[#2c2c31] my-1" />
+                    <div className="h-px bg-white/10 my-1" />
                     <button
                       onClick={() => signOut({ callbackUrl: "/login" })}
                       className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-red-400 hover:bg-red-500/10 transition-colors"
@@ -256,7 +252,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="bg-[#87ea5c] text-[#09090b] px-4 py-1.5 rounded-lg text-xs font-semibold hover:bg-[#78d84f] transition-all shadow-sm hover:shadow-[0_0_15px_rgba(135,234,92,0.3)]"
+              className="heroui-btn heroui-btn-solid-primary text-xs py-1.5 px-4"
             >
               Sign In
             </Link>
@@ -266,7 +262,7 @@ export default function Navbar() {
         {/* Mobile Navbar Controls */}
         <div className="flex md:hidden items-center gap-2">
           {status === "authenticated" && (
-            <div className="flex items-center h-8 border border-[#2c2c31] rounded-lg bg-[#18181b] px-2.5 text-xs font-medium text-[#fafafa] gap-1">
+            <div className="flex items-center h-8 border border-white/10 rounded-xl bg-[#18181b] px-2.5 text-xs font-semibold text-[#fafafa] gap-1">
               <FiDollarSign className="text-[#87ea5c] text-xs" />
               <span>
                 {isApiKeyActive
@@ -280,7 +276,7 @@ export default function Navbar() {
           
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="hover:bg-[#202024] p-1.5 rounded-lg cursor-pointer transition-colors text-[#fafafa] border border-[#2c2c31]"
+            className="hover:bg-white/10 p-2 rounded-xl cursor-pointer transition-colors text-[#fafafa] border border-white/10"
             aria-label="Toggle Menu"
           >
             {isOpen ? <IoClose size={20} /> : <IoMenu size={20} />}
@@ -288,18 +284,18 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Dropdown — HeroUI Card */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 z-[200] bg-[#18181b] border-b border-[#2c2c31] shadow-2xl py-4 px-6 md:hidden animate-fade-in">
-          <nav className="flex flex-col gap-3">
-            <span className="text-[10px] uppercase font-bold text-[#71717a] tracking-widest mb-1">Navigation</span>
+        <div className="absolute top-full left-0 right-0 z-[200] bg-[#18181b]/95 backdrop-blur-2xl border-b border-white/10 shadow-2xl py-4 px-6 md:hidden animate-fade-in">
+          <nav className="flex flex-col gap-2">
+            <span className="text-[10px] uppercase font-bold text-[#71717a] tracking-widest px-2 mb-1">Navigation</span>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center py-2 px-3 rounded-lg text-xs font-semibold transition-all ${
-                  pathname === link.path ? "bg-[#27272a] text-[#87ea5c] border border-[#2c2c31]" : "text-[#fafafa] hover:bg-[#202024]"
+                className={`flex items-center py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
+                  pathname === link.path ? "bg-[#27272a] text-[#87ea5c] border border-white/10 shadow-sm" : "text-[#fafafa] hover:bg-white/5"
                 }`}
               >
                 {link.name}
@@ -311,7 +307,7 @@ export default function Navbar() {
                 setIsOpen(false);
                 openApiKeyModal();
               }}
-              className="flex w-full items-center justify-between rounded-lg border border-[#2c2c31] bg-[#1c1c20] px-3 py-2.5 text-xs font-medium text-[#87ea5c]"
+              className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-[#27272a]/50 px-3.5 py-2.5 text-xs font-medium text-[#87ea5c] mt-2"
             >
               <div className="flex items-center gap-2">
                 <FiKey />
@@ -319,7 +315,7 @@ export default function Navbar() {
               </div>
             </button>
 
-            <div className="h-px bg-[#2c2c31] my-2" />
+            <div className="h-px bg-white/10 my-2" />
 
             {status === "authenticated" ? (
               <button
@@ -327,7 +323,7 @@ export default function Navbar() {
                   setIsOpen(false);
                   signOut({ callbackUrl: "/login" });
                 }}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500/10 text-red-400 py-2.5 text-xs font-semibold hover:bg-red-500/20 transition-all border border-red-500/20 mt-1"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-500/10 text-red-400 py-2.5 text-xs font-semibold hover:bg-red-500/20 transition-all border border-red-500/20 mt-1"
               >
                 <FiLogOut size={14} />
                 <span>Sign Out</span>
@@ -336,7 +332,7 @@ export default function Navbar() {
               <Link
                 href="/login"
                 onClick={() => setIsOpen(false)}
-                className="flex w-full items-center justify-center rounded-lg bg-[#87ea5c] text-[#09090b] py-2.5 text-xs font-semibold hover:bg-[#78d84f] transition-all mt-1"
+                className="heroui-btn heroui-btn-solid-primary w-full py-2.5 text-center mt-1"
               >
                 Sign In
               </Link>
@@ -345,18 +341,18 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* API Key Modal */}
+      {/* HeroUI Modal: API Key Modal */}
       {isApiKeyModalOpen && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
-          <div className="bg-[#18181b] border border-[#2c2c31] w-full max-w-md rounded-2xl p-6 space-y-5 shadow-2xl animate-scale-up">
-            <div className="flex items-center justify-between border-b border-[#2c2c31] pb-3">
+        <div className="heroui-modal-backdrop z-[300]">
+          <div className="heroui-card w-full max-w-md p-6 space-y-5 shadow-2xl animate-scale-up">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2 text-[#fafafa] font-semibold text-sm">
                 <div className="w-2 h-2 rounded-full bg-[#87ea5c]" />
                 <span>Bring Your Own Key (BYOK)</span>
               </div>
               <button
                 onClick={() => setIsApiKeyModalOpen(false)}
-                className="text-[#71717a] hover:text-[#fafafa] transition-colors cursor-pointer"
+                className="text-[#71717a] hover:text-[#fafafa] transition-colors cursor-pointer p-1 rounded-lg hover:bg-white/10"
               >
                 <FiX size={18} />
               </button>
@@ -376,7 +372,7 @@ export default function Navbar() {
                   value={apiKeyInput}
                   onChange={(e) => setApiKeyInput(e.target.value)}
                   placeholder="mu_..."
-                  className="w-full bg-[#121214] border border-[#2c2c31] rounded-lg px-3.5 py-2 text-xs text-[#fafafa] placeholder-[#52525b] focus:outline-none focus:border-[#87ea5c] transition-colors"
+                  className="heroui-input"
                 />
               </div>
 
@@ -386,7 +382,7 @@ export default function Navbar() {
                     type="button"
                     onClick={handleRemoveApiKey}
                     disabled={savingKey}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium border border-red-500/20 transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold border border-red-500/20 transition-all cursor-pointer"
                   >
                     <FiTrash2 />
                     <span>Remove Key</span>
@@ -397,14 +393,14 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => setIsApiKeyModalOpen(false)}
-                    className="px-4 py-2 rounded-lg bg-[#202024] border border-[#2c2c31] text-xs font-medium text-[#a1a1aa] hover:text-[#fafafa] cursor-pointer"
+                    className="heroui-btn heroui-btn-flat text-xs py-2 px-4"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={savingKey || !apiKeyInput.trim()}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#87ea5c] hover:bg-[#78d84f] text-[#09090b] text-xs font-semibold transition-all disabled:opacity-50 cursor-pointer shadow-sm hover:shadow-[0_0_15px_rgba(135,234,92,0.3)]"
+                    className="heroui-btn heroui-btn-solid-primary text-xs py-2 px-4 gap-1.5"
                   >
                     <FiCheck />
                     <span>{savingKey ? "Saving..." : status === "authenticated" ? "Save Key" : "Authenticate with Key"}</span>

@@ -146,25 +146,25 @@ export default function TermsPage() {
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] transition-colors"
+              className="heroui-btn heroui-btn-flat text-xs py-1.5 px-3 gap-2 text-[#a1a1aa] hover:text-[#fafafa]"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Retour au Studio OpenImage</span>
+              <span>Retour au Studio</span>
             </Link>
 
             <Link
               href="/privacy"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-[#87ea5c] hover:underline"
+              className="heroui-btn heroui-btn-light text-xs py-1.5 px-3 gap-1.5 text-[#87ea5c] hover:text-[#87ea5c]"
             >
               <Shield className="w-3.5 h-3.5" />
-              <span>Consulter la Politique de Confidentialité</span>
+              <span>Politique de Confidentialité</span>
             </Link>
           </div>
 
-          <div className="space-y-3 border-b border-[#26262b] pb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#18181b] border border-[#2c2c31] rounded-full">
+          <div className="space-y-3 border-b border-white/10 pb-8">
+            <div className="inline-flex items-center gap-2 heroui-chip heroui-chip-primary text-xs py-1 px-3">
               <Scale className="w-3.5 h-3.5 text-[#87ea5c]" />
-              <span className="text-[10px] font-mono font-medium text-[#87ea5c] uppercase tracking-wider">
+              <span className="font-mono font-medium uppercase tracking-wider">
                 Cadre Juridique &bull; Conditions Contractuelles
               </span>
             </div>
@@ -178,35 +178,35 @@ export default function TermsPage() {
           </div>
         </header>
 
-        {/* TL;DR Summary Box for User Clarity & Google E-E-A-T */}
+        {/* TL;DR Summary Box for User Clarity & Google E-E-A-T — HeroUI Card */}
         <section
           aria-label="Résumé des conditions d'utilisation"
-          className="bg-[#18181b]/90 border border-[#87ea5c]/30 rounded-2xl p-5 sm:p-6 space-y-3 shadow-lg shadow-[#87ea5c]/5"
+          className="heroui-card p-5 sm:p-6 space-y-3 border-[#87ea5c]/30 shadow-lg shadow-[#87ea5c]/5"
         >
           <div className="flex items-center gap-2 text-[#87ea5c] font-semibold text-xs sm:text-sm uppercase tracking-wider font-mono">
             <CheckCircle2 className="w-4 h-4" />
             <span>En clair : vos droits et engagements essentiels</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#a1a1aa] pt-1">
-            <div className="bg-[#121214] p-3.5 rounded-xl border border-[#26262b] space-y-1">
+            <div className="heroui-card p-3.5 space-y-1 bg-[#121214]/80">
               <span className="text-[#fafafa] font-semibold block">Propriété commerciale</span>
               <p>Vous exploitez librement vos images synthétisées à des fins personnelles et commerciales.</p>
             </div>
-            <div className="bg-[#121214] p-3.5 rounded-xl border border-[#26262b] space-y-1">
+            <div className="heroui-card p-3.5 space-y-1 bg-[#121214]/80">
               <span className="text-[#fafafa] font-semibold block">Crédits sans expiration</span>
               <p>Paiement unique par pack via Stripe. Vos crédits restent valables indéfiniment.</p>
             </div>
-            <div className="bg-[#121214] p-3.5 rounded-xl border border-[#26262b] space-y-1">
+            <div className="heroui-card p-3.5 space-y-1 bg-[#121214]/80">
               <span className="text-[#fafafa] font-semibold block">Mode BYOK sans surcoût</span>
               <p>Connectez votre propre clé d&apos;API pour une liberté d&apos;inférence directe et illimitée.</p>
             </div>
           </div>
         </section>
 
-        {/* Table of contents for SEO & Anchor Navigation */}
+        {/* Table of contents for SEO & Anchor Navigation — HeroUI Card */}
         <nav
           aria-label="Sommaire des conditions générales"
-          className="bg-[#121214] border border-[#2c2c31] rounded-2xl p-5 space-y-3"
+          className="heroui-card p-5 space-y-3"
         >
           <h2 className="text-xs uppercase font-mono tracking-wider text-[#a1a1aa] font-bold">
             Sommaire des sections

@@ -46,16 +46,16 @@ export default function RecentGenerationsPanel({
   });
 
   return (
-    <aside className="w-full lg:w-[300px] xl:w-[330px] border-t lg:border-t-0 lg:border-l border-[#26262b] bg-[#18181b] flex flex-col shrink-0 h-auto lg:h-full z-20 transition-all">
+    <aside className="w-full lg:w-[300px] xl:w-[330px] border-t lg:border-t-0 lg:border-l border-white/10 bg-[#18181b]/95 backdrop-blur-xl flex flex-col shrink-0 h-auto lg:h-full z-20 transition-all">
       {/* Panel Header */}
-      <div className="p-4 border-b border-[#26262b] flex items-center justify-between">
+      <div className="p-4 border-b border-white/10 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Clock className="w-4 h-4 text-[#87ea5c]" />
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-wider text-[#fafafa] flex items-center gap-2">
-              Recent Generations
+              Recent Reel
               {generations.length > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-semibold bg-[#222226] text-[#87ea5c] border border-[#2c2c31]">
+                <span className="heroui-chip heroui-chip-primary text-[9px] py-0.2 px-1.5 font-mono font-semibold">
                   {generations.length}
                 </span>
               )}
@@ -68,7 +68,7 @@ export default function RecentGenerationsPanel({
           {generations.length > 0 && (
             <button
               onClick={onClear}
-              className="p-1.5 rounded-lg text-[#71717a] hover:text-[#ef4444] hover:bg-[#242429] transition-colors"
+              className="heroui-btn heroui-btn-light p-1.5 rounded-lg text-[#71717a] hover:text-[#ef4444]"
               title="Clear Session History"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -77,7 +77,7 @@ export default function RecentGenerationsPanel({
           {onClose && (
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-[#71717a] hover:text-[#fafafa] hover:bg-[#242429] transition-colors"
+              className="heroui-btn heroui-btn-light p-1.5 rounded-lg text-[#71717a] hover:text-[#fafafa]"
               title="Close panel"
             >
               <X className="w-4 h-4" />
@@ -86,39 +86,35 @@ export default function RecentGenerationsPanel({
         </div>
       </div>
 
-      {/* Filter Chips (if generations exist) */}
+      {/* HeroUI Filter Tabs */}
       {generations.length > 1 && (
-        <div className="px-4 py-2 border-b border-[#26262b] flex items-center gap-1.5 bg-[#141416]">
-          <button
-            onClick={() => setFilter("all")}
-            className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-              filter === "all"
-                ? "bg-[#242429] text-[#fafafa] border border-[#3f3f46]"
-                : "text-[#a1a1aa] hover:text-[#fafafa]"
-            }`}
-          >
-            All ({generations.length})
-          </button>
-          <button
-            onClick={() => setFilter("generate")}
-            className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-              filter === "generate"
-                ? "bg-[#242429] text-[#fafafa] border border-[#3f3f46]"
-                : "text-[#a1a1aa] hover:text-[#fafafa]"
-            }`}
-          >
-            Generated
-          </button>
-          <button
-            onClick={() => setFilter("edit")}
-            className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-              filter === "edit"
-                ? "bg-[#242429] text-[#fafafa] border border-[#3f3f46]"
-                : "text-[#a1a1aa] hover:text-[#fafafa]"
-            }`}
-          >
-            Remixed
-          </button>
+        <div className="px-4 py-2 border-b border-white/10 bg-[#141416]">
+          <div className="heroui-tabs p-0.5">
+            <button
+              onClick={() => setFilter("all")}
+              className={`heroui-tab text-[10px] py-1 ${
+                filter === "all" ? "heroui-tab-active" : "heroui-tab-inactive"
+              }`}
+            >
+              All ({generations.length})
+            </button>
+            <button
+              onClick={() => setFilter("generate")}
+              className={`heroui-tab text-[10px] py-1 ${
+                filter === "generate" ? "heroui-tab-active" : "heroui-tab-inactive"
+              }`}
+            >
+              Generated
+            </button>
+            <button
+              onClick={() => setFilter("edit")}
+              className={`heroui-tab text-[10px] py-1 ${
+                filter === "edit" ? "heroui-tab-active" : "heroui-tab-inactive"
+              }`}
+            >
+              Remixed
+            </button>
+          </div>
         </div>
       )}
 
@@ -146,10 +142,10 @@ export default function RecentGenerationsPanel({
             return (
               <div
                 key={item.id || `${item.url}-${idx}`}
-                className={`group relative rounded-xl border transition-all duration-200 overflow-hidden ${
+                className={`group relative rounded-2xl border transition-all duration-200 overflow-hidden heroui-card ${
                   isActive
-                    ? "bg-[#1f1f24] border-[#87ea5c] ring-1 ring-[#87ea5c]/50 shadow-md"
-                    : "bg-[#141416] hover:bg-[#1c1c20] border-[#2c2c31] hover:border-[#3f3f46]"
+                    ? "!border-[#87ea5c] ring-2 ring-[#87ea5c]/50 shadow-lg shadow-[#87ea5c]/10"
+                    : "hover:border-white/20"
                 }`}
               >
                 {/* Thumbnail & Quick Action Trigger */}
@@ -166,8 +162,8 @@ export default function RecentGenerationsPanel({
 
                   {/* Active Indicator Chip */}
                   {isActive && (
-                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-semibold bg-[#87ea5c] text-[#09090b] shadow-md flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
+                    <div className="absolute top-2 left-2 heroui-chip heroui-chip-primary text-[9px] py-0.5 px-2 font-semibold shadow-md">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c] animate-pulse" />
                       Active Stage
                     </div>
                   )}
@@ -175,7 +171,7 @@ export default function RecentGenerationsPanel({
                   {/* Mode & Ratio Badges */}
                   <div className="absolute top-2 right-2 flex items-center gap-1">
                     {item.aspectRatio?.value && (
-                      <span className="px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-[#fafafa] border border-white/10">
+                      <span className="heroui-chip heroui-chip-default text-[9px] py-0.2 px-1.5 font-mono">
                         {item.aspectRatio.value}
                       </span>
                     )}
@@ -183,7 +179,7 @@ export default function RecentGenerationsPanel({
 
                   {/* Overlay on hover */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <span className="px-2.5 py-1 rounded-lg bg-[#87ea5c] text-[#09090b] text-xs font-semibold flex items-center gap-1 shadow-lg">
+                    <span className="heroui-btn heroui-btn-solid-primary text-xs py-1 px-3 shadow-lg gap-1">
                       <Maximize2 className="w-3 h-3" />
                       Examine
                     </span>
@@ -191,16 +187,16 @@ export default function RecentGenerationsPanel({
                 </div>
 
                 {/* Card Details & Actions */}
-                <div className="p-2.5 space-y-2">
+                <div className="p-3 space-y-2">
                   <p
                     onClick={() => onSelect(item)}
-                    className="text-xs text-[#fafafa] font-medium line-clamp-2 cursor-pointer hover:text-[#87ea5c] transition-colors leading-snug"
+                    className="text-xs text-[#fafafa] font-semibold line-clamp-2 cursor-pointer hover:text-[#87ea5c] transition-colors leading-snug"
                     title={item.prompt}
                   >
                     {item.prompt || "Untitled Artifact"}
                   </p>
 
-                  <div className="flex items-center justify-between text-[10px] text-[#a1a1aa] pt-1 border-t border-[#26262b]">
+                  <div className="flex items-center justify-between text-[10px] text-[#a1a1aa] pt-1.5 border-t border-white/10">
                     <span className="font-mono">{timeAgo(item.timestamp)}</span>
 
                     <div className="flex items-center gap-1.5">
@@ -246,9 +242,9 @@ export default function RecentGenerationsPanel({
       </div>
 
       {/* Footer Info / Tip */}
-      <div className="p-3 border-t border-[#26262b] bg-[#121214] flex items-center justify-between text-[10px] text-[#71717a]">
+      <div className="p-3 border-t border-white/10 bg-[#121214] flex items-center justify-between text-[10px] text-[#71717a]">
         <span>Click any thumbnail to reload stage</span>
-        <span className="font-mono text-[#87ea5c]">PNG • JPG • WEBP</span>
+        <span className="heroui-chip heroui-chip-primary text-[9px] py-0.2 px-1.5 font-mono">PNG • JPG • WEBP</span>
       </div>
     </aside>
   );

@@ -75,9 +75,9 @@ export default function Pricing() {
         
         {/* Header */}
         <div className="text-center space-y-3 max-w-xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#18181b] border border-[#2c2c31] rounded-full">
+          <div className="heroui-chip heroui-chip-primary text-xs py-1 px-3.5">
             <Zap className="w-3.5 h-3.5 text-[#87ea5c]" />
-            <span className="text-[10px] font-mono font-medium text-[#87ea5c] uppercase tracking-wider">
+            <span className="font-mono font-semibold uppercase tracking-wider">
               Studio Capacity
             </span>
           </div>
@@ -89,19 +89,19 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* Pricing Cards Grid */}
+        {/* Pricing Cards Grid — HeroUI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-5xl">
           {PLANS.map((plan) => (
             <div
               key={plan.id}
-              className={`relative bg-[#18181b] border rounded-2xl p-6 flex flex-col justify-between gap-6 transition-all duration-200 hover:-translate-y-1 ${
+              className={`relative heroui-card p-6 flex flex-col justify-between gap-6 transition-all duration-200 hover:-translate-y-1 ${
                 plan.popular
-                  ? "border-[#87ea5c] shadow-xl shadow-[#87ea5c]/5"
-                  : "border-[#2c2c31] hover:border-[#3f3f46]"
+                  ? "!border-[#87ea5c] ring-2 ring-[#87ea5c]/30 shadow-2xl shadow-[#87ea5c]/10"
+                  : "hover:border-white/20"
               }`}
             >
               {plan.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#87ea5c] text-[#09090b] text-[10px] font-bold uppercase px-3 py-0.5 rounded-full tracking-wider shadow-sm">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 heroui-chip heroui-chip-primary text-[10px] font-bold uppercase py-0.5 px-3 tracking-wider shadow-md">
                   Recommended
                 </span>
               )}
@@ -117,7 +117,7 @@ export default function Pricing() {
                   </div>
                 </div>
 
-                <div className="text-xs bg-[#121214] border border-[#2c2c31] py-2 px-3 rounded-lg text-center font-mono font-semibold text-[#87ea5c]">
+                <div className="heroui-chip heroui-chip-primary w-full justify-center text-xs py-2 px-3 font-mono font-semibold">
                   {plan.credits} Credits Included
                 </div>
 
@@ -125,14 +125,14 @@ export default function Pricing() {
                   {plan.description}
                 </p>
 
-                <ul className="space-y-2.5 border-t border-[#26262b] pt-4 text-xs text-[#a1a1aa]">
+                <ul className="space-y-2.5 border-t border-white/10 pt-4 text-xs text-[#a1a1aa]">
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-[#87ea5c]" />
                     <span>All aspect ratio formats</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-[#87ea5c]" />
-                    <span>1K, 2K & 4K resolutions</span>
+                    <span>1K, 2K &amp; 4K resolutions</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-[#87ea5c]" />
@@ -144,10 +144,10 @@ export default function Pricing() {
               <button
                 onClick={() => handleCheckout(plan.id)}
                 disabled={loadingPlan !== null}
-                className={`w-full py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer select-none ${
+                className={`w-full py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
                   plan.popular
-                    ? "opendesign-btn-primary shadow-sm"
-                    : "bg-[#222226] hover:bg-[#2c2c31] text-[#fafafa] border border-[#3f3f46]"
+                    ? "heroui-btn heroui-btn-solid-primary"
+                    : "heroui-btn heroui-btn-flat"
                 }`}
               >
                 {loadingPlan === plan.id ? "Redirecting..." : "Acquire Pack"}
@@ -157,7 +157,7 @@ export default function Pricing() {
         </div>
 
         {/* Guarantee Banner */}
-        <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#18181b] border border-[#2c2c31] text-xs text-[#a1a1aa]">
+        <div className="flex items-center gap-3 px-4 py-2.5 heroui-card text-xs text-[#a1a1aa]">
           <ShieldCheck className="w-4 h-4 text-[#87ea5c]" />
           <span>Encrypted payment processing via Stripe. Unlimited usage when Bring-Your-Own-Key is active.</span>
         </div>

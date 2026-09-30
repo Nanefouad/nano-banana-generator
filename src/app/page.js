@@ -379,28 +379,26 @@ export default function Home() {
       <aside className="w-full lg:w-[380px] xl:w-[410px] border-t lg:border-t-0 lg:border-r border-[#26262b] bg-[#18181b] flex flex-col shrink-0 h-auto lg:h-full lg:overflow-y-auto scrollbar-subtle z-20">
         
         {/* Studio Panel Header */}
-        <div className="p-5 border-b border-[#26262b] space-y-4">
+        <div className="p-5 border-b border-white/10 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sliders className="w-4 h-4 text-[#87ea5c]" />
               <h2 className="text-xs font-semibold uppercase tracking-wider text-[#fafafa]">
-                Brief & Parameters
+                Brief &amp; Parameters
               </h2>
             </div>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#222226] text-[#87ea5c] border border-[#2c2c31]">
+            <span className="heroui-chip heroui-chip-primary text-[10px] py-0.5 px-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c] animate-pulse" />
               v2.0
             </span>
           </div>
 
-          {/* Mode Switcher Segmented Control */}
-          <div className="flex p-1 bg-[#121214] rounded-lg border border-[#2c2c31]">
+          {/* HeroUI Tabs Mode Switcher */}
+          <div className="heroui-tabs">
             <button
               onClick={() => handleModeChange("generate")}
-              className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-2 ${
-                mode === "generate"
-                  ? "bg-[#242429] text-[#fafafa] shadow-sm font-semibold border border-[#3f3f46]/60"
-                  : "text-[#a1a1aa] hover:text-[#fafafa] hover:bg-[#1c1c20]"
+              className={`heroui-tab ${
+                mode === "generate" ? "heroui-tab-active" : "heroui-tab-inactive"
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-[#87ea5c]" />
@@ -408,10 +406,8 @@ export default function Home() {
             </button>
             <button
               onClick={() => handleModeChange("edit")}
-              className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-2 ${
-                mode === "edit"
-                  ? "bg-[#242429] text-[#fafafa] shadow-sm font-semibold border border-[#3f3f46]/60"
-                  : "text-[#a1a1aa] hover:text-[#fafafa] hover:bg-[#1c1c20]"
+              className={`heroui-tab ${
+                mode === "edit" ? "heroui-tab-active" : "heroui-tab-inactive"
               }`}
             >
               <RefreshCw className="w-3.5 h-3.5 text-[#87ea5c]" />
@@ -433,7 +429,7 @@ export default function Home() {
               {prompt && (
                 <button
                   onClick={handleCopyPrompt}
-                  className="text-[11px] text-[#71717a] hover:text-[#fafafa] flex items-center gap-1 transition-colors"
+                  className="heroui-btn heroui-btn-light text-[11px] py-0.5 px-2 gap-1 text-[#a1a1aa]"
                   title="Copy Prompt"
                 >
                   {copiedPrompt ? <Check className="w-3 h-3 text-[#87ea5c]" /> : <Copy className="w-3 h-3" />}
@@ -451,11 +447,11 @@ export default function Home() {
                     ? "Describe the visual artifact in detail (e.g., architectural render, lighting, materials)..."
                     : "Specify modifications (e.g., replace the background with an ethereal twilight forest)..."
                 }
-                className="w-full h-28 bg-[#121214] border border-[#2c2c31] rounded-xl p-3 text-xs text-[#fafafa] placeholder-[#52525b] focus:outline-none focus:border-[#87ea5c] focus:ring-1 focus:ring-[#87ea5c]/30 resize-none transition-all font-sans leading-relaxed"
+                className="heroui-input w-full h-28 resize-none font-sans leading-relaxed"
               />
             </div>
 
-            {/* Quick Inspiration Chips */}
+            {/* Quick Inspiration HeroUI Chips */}
             <div className="pt-1">
               <span className="text-[10px] text-[#71717a] font-medium block mb-1.5">Quick Inspiration:</span>
               <div className="flex flex-wrap gap-1.5">
@@ -463,7 +459,7 @@ export default function Home() {
                   <button
                     key={idx}
                     onClick={() => setPrompt(preset)}
-                    className="text-[10px] bg-[#1e1e22] hover:bg-[#27272a] text-[#a1a1aa] hover:text-[#fafafa] border border-[#2e2e33] px-2 py-1 rounded-md transition-colors truncate max-w-[190px] text-left"
+                    className="heroui-chip heroui-chip-default hover:!border-[#87ea5c]/50 hover:text-[#fafafa] transition-all cursor-pointer truncate max-w-[190px] text-left"
                     title={preset}
                   >
                     {preset}
@@ -478,7 +474,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="space-y-3 pt-2 border-t border-[#26262b]"
+              className="space-y-3 pt-2 border-t border-white/10"
             >
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-[#fafafa] flex items-center gap-2">
@@ -495,7 +491,7 @@ export default function Home() {
                     value={newImageUrl}
                     onChange={(e) => setNewImageUrl(e.target.value)}
                     placeholder="Paste image URL..."
-                    className="flex-1 bg-[#121214] border border-[#2c2c31] rounded-lg px-3 py-2 text-xs text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#87ea5c]"
+                    className="heroui-input flex-1"
                   />
                   <input
                     type="file"
@@ -513,7 +509,7 @@ export default function Home() {
                       fileInputRef.current?.click();
                     }}
                     disabled={isUploading || imagesList.length >= 14}
-                    className="w-9 h-9 bg-[#1e1e22] border border-[#2c2c31] text-[#fafafa] hover:text-[#87ea5c] hover:border-[#87ea5c]/50 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50"
+                    className="heroui-btn heroui-btn-flat w-9 h-9 p-0 disabled:opacity-50"
                     title="Upload Local File"
                   >
                     {isUploading ? (
@@ -525,7 +521,7 @@ export default function Home() {
                   <button
                     onClick={addImageToList}
                     disabled={!newImageUrl || imagesList.length >= 14}
-                    className="w-9 h-9 bg-[#87ea5c]/10 border border-[#87ea5c]/30 text-[#87ea5c] hover:bg-[#87ea5c] hover:text-[#09090b] rounded-lg flex items-center justify-center transition-colors disabled:opacity-40"
+                    className="heroui-btn heroui-btn-solid-primary w-9 h-9 p-0 disabled:opacity-40"
                     title="Add URL"
                   >
                     <Plus className="w-4 h-4" />
@@ -538,7 +534,7 @@ export default function Home() {
                     {imagesList.map((url, idx) => (
                       <div
                         key={idx}
-                        className="relative aspect-square rounded-lg bg-[#121214] overflow-hidden group border border-[#2c2c31]"
+                        className="relative aspect-square rounded-xl bg-[#121214] overflow-hidden group border border-white/10"
                       >
                         <img
                           src={url}
@@ -547,7 +543,7 @@ export default function Home() {
                         />
                         <button
                           onClick={() => removeImageFromList(idx)}
-                          className="absolute top-1 right-1 bg-red-500/90 hover:bg-red-600 p-1 rounded text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="absolute top-1 right-1 bg-red-500/90 hover:bg-red-600 p-1 rounded-lg text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <Trash2 className="w-3 h-3" />
                         </button>
@@ -559,14 +555,14 @@ export default function Home() {
             </motion.div>
           )}
 
-          {/* Aspect Ratio Selector Matrix */}
-          <div className="space-y-2.5 pt-2 border-t border-[#26262b]" ref={ratioRef}>
+          {/* Aspect Ratio Selector Matrix — HeroUI Cards */}
+          <div className="space-y-2.5 pt-2 border-t border-white/10" ref={ratioRef}>
             <div className="flex items-center justify-between">
               <label className="text-xs font-semibold text-[#fafafa] flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[#87ea5c] rounded-full" />
                 Aspect Ratio
               </label>
-              <span className="text-[10px] text-[#87ea5c] font-mono">
+              <span className="text-[10px] text-[#87ea5c] font-mono font-semibold">
                 {aspectRatio.value}
               </span>
             </div>
@@ -579,10 +575,10 @@ export default function Home() {
                   <button
                     key={item.value}
                     onClick={() => setAspectRatio(item)}
-                    className={`flex flex-col items-center justify-center p-2.5 rounded-lg border text-center transition-all ${
+                    className={`heroui-card heroui-card-hover p-2.5 flex flex-col items-center justify-center text-center cursor-pointer ${
                       isSelected
-                        ? "bg-[#242429] border-[#87ea5c] text-[#fafafa] shadow-sm ring-1 ring-[#87ea5c]/20"
-                        : "bg-[#121214] border-[#2c2c31] text-[#a1a1aa] hover:border-[#3f3f46] hover:text-[#fafafa]"
+                        ? "!border-[#87ea5c] ring-2 ring-[#87ea5c]/30 shadow-lg shadow-[#87ea5c]/15 !bg-[#1c241a]"
+                        : ""
                     }`}
                   >
                     <div className="h-6 flex items-center justify-center mb-1.5">
@@ -592,7 +588,7 @@ export default function Home() {
                         }`}
                       />
                     </div>
-                    <span className="text-[10px] font-medium leading-tight truncate w-full">
+                    <span className="text-[10px] font-semibold leading-tight truncate w-full text-[#fafafa]">
                       {item.value}
                     </span>
                   </button>
@@ -604,7 +600,7 @@ export default function Home() {
             <div className="relative pt-1">
               <button
                 onClick={() => setIsMoreRatiosOpen(!isMoreRatiosOpen)}
-                className="w-full flex items-center justify-between px-3 py-2 bg-[#121214] border border-[#2c2c31] hover:border-[#3f3f46] rounded-lg text-xs font-medium text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
+                className="heroui-btn heroui-btn-flat w-full justify-between py-2 px-3.5 text-xs text-[#a1a1aa] hover:text-[#fafafa]"
               >
                 <span>Other Aspect Ratios ({aspectRatio.label})</span>
                 <ChevronDown
@@ -620,7 +616,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 4 }}
-                    className="absolute top-11 left-0 right-0 max-h-48 bg-[#18181b] border border-[#2c2c31] rounded-xl overflow-y-auto scrollbar-subtle shadow-2xl z-[100] p-1.5"
+                    className="absolute top-11 left-0 right-0 max-h-48 heroui-card heroui-popover overflow-y-auto scrollbar-subtle shadow-2xl z-[100] p-1.5"
                   >
                     {ALL_RATIOS.map((item) => (
                       <button
@@ -629,10 +625,10 @@ export default function Home() {
                           setAspectRatio(item);
                           setIsMoreRatiosOpen(false);
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors flex items-center justify-between ${
+                        className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors flex items-center justify-between cursor-pointer ${
                           aspectRatio.value === item.value
-                            ? "bg-[#242429] text-[#87ea5c] font-semibold"
-                            : "text-[#a1a1aa] hover:bg-[#202024] hover:text-[#fafafa]"
+                            ? "bg-[#27272a] text-[#87ea5c] font-semibold"
+                            : "text-[#a1a1aa] hover:bg-white/10 hover:text-[#fafafa]"
                         }`}
                       >
                         <span>{item.label}</span>
@@ -645,8 +641,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Quality & Resolution */}
-          <div className="space-y-2.5 pt-2 border-t border-[#26262b]">
+          {/* Quality & Resolution — HeroUI Cards */}
+          <div className="space-y-2.5 pt-2 border-t border-white/10">
             <label className="text-xs font-semibold text-[#fafafa] flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#87ea5c] rounded-full" />
               Output Resolution
@@ -658,15 +654,15 @@ export default function Home() {
                   <button
                     key={res.value}
                     onClick={() => setResolution(res)}
-                    className={`flex flex-col items-center py-2.5 px-2 rounded-lg border transition-all ${
+                    className={`heroui-card heroui-card-hover py-2.5 px-2 flex flex-col items-center cursor-pointer ${
                       isSelected
-                        ? "bg-[#242429] border-[#87ea5c] text-[#fafafa] shadow-sm ring-1 ring-[#87ea5c]/20"
-                        : "bg-[#121214] border-[#2c2c31] text-[#a1a1aa] hover:border-[#3f3f46] hover:text-[#fafafa]"
+                        ? "!border-[#87ea5c] ring-2 ring-[#87ea5c]/30 shadow-lg shadow-[#87ea5c]/15 !bg-[#1c241a]"
+                        : ""
                     }`}
                   >
-                    <span className="text-xs font-semibold tracking-tight">{res.label}</span>
+                    <span className="text-xs font-semibold tracking-tight text-[#fafafa]">{res.label}</span>
                     <span
-                      className={`text-[10px] mt-1 font-mono ${
+                      className={`text-[10px] mt-1 font-mono font-medium ${
                         isSelected ? "text-[#87ea5c]" : "text-[#71717a]"
                       }`}
                     >
@@ -678,30 +674,30 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Google Search Enhancer */}
-          <div className="pt-2 border-t border-[#26262b]">
+          {/* Google Search Enhancer — HeroUI Card Switch */}
+          <div className="pt-2 border-t border-white/10">
             <button
               onClick={() => setGoogleSearch(!googleSearch)}
-              className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
+              className={`heroui-card heroui-card-hover w-full flex items-center justify-between p-3 cursor-pointer ${
                 googleSearch
-                  ? "bg-[#1f281e] border-[#87ea5c]/40 text-[#fafafa]"
-                  : "bg-[#121214] border-[#2c2c31] text-[#a1a1aa] hover:border-[#3f3f46]"
+                  ? "!border-[#87ea5c]/50 !bg-[#1f281e]"
+                  : ""
               }`}
             >
               <div className="flex items-center gap-2.5">
                 <Search className={`w-4 h-4 ${googleSearch ? "text-[#87ea5c]" : "text-[#71717a]"}`} />
                 <div className="text-left">
-                  <div className="text-xs font-medium text-[#fafafa]">Smart Search Grounding</div>
+                  <div className="text-xs font-semibold text-[#fafafa]">Smart Search Grounding</div>
                   <div className="text-[10px] text-[#71717a]">Grounded with Google Search intelligence</div>
                 </div>
               </div>
               <div
-                className={`w-8 h-4 rounded-full relative p-0.5 transition-colors flex items-center ${
+                className={`w-9 h-5 rounded-full relative p-0.5 transition-colors flex items-center ${
                   googleSearch ? "bg-[#87ea5c]" : "bg-[#27272a]"
                 }`}
               >
                 <div
-                  className={`w-3 h-3 rounded-full bg-black shadow-sm transition-transform duration-200 ${
+                  className={`w-4 h-4 rounded-full bg-black shadow-md transition-transform duration-200 ${
                     googleSearch ? "translate-x-4" : "translate-x-0"
                   }`}
                 />
@@ -711,7 +707,7 @@ export default function Home() {
         </div>
 
         {/* Generate Run CTA Button Bar */}
-        <div className="p-5 border-t border-[#26262b] bg-[#18181b]/95">
+        <div className="p-5 border-t border-white/10 bg-[#18181b]/95">
           <button
             onClick={handleGenerate}
             disabled={
@@ -719,7 +715,7 @@ export default function Home() {
               (mode === "generate" && !prompt.trim()) ||
               (mode === "edit" && imagesList.length === 0)
             }
-            className="w-full opendesign-btn-primary rounded-xl py-3 px-4 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer text-xs font-bold uppercase tracking-wider"
+            className="heroui-btn heroui-btn-solid-primary w-full py-3.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {loading ? (
               <div className="w-4 h-4 border-2 border-[#09090b] border-t-transparent rounded-full animate-spin" />
@@ -729,14 +725,14 @@ export default function Home() {
             <span>
               {loading ? "Synthesizing Artifact..." : `Run Generation (${resolution.cost} Credits)`}
             </span>
-            <span className="ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded bg-black/15 text-[#09090b]">
+            <span className="ml-auto heroui-kbd text-[#09090b] bg-black/15 border-black/20">
               ⌘↵
             </span>
           </button>
         </div>
 
         {/* Sidebar Footer & Legal Links (SEO & Transparency) */}
-        <div className="px-5 py-3 border-t border-[#26262b] bg-[#141416] text-[11px] text-[#71717a]">
+        <div className="px-5 py-3 border-t border-white/10 bg-[#141416] text-[11px] text-[#71717a]">
           <div className="flex flex-wrap items-center justify-between gap-y-1">
             <Link
               href="/privacy"
@@ -766,9 +762,9 @@ export default function Home() {
               Galerie
             </Link>
           </div>
-          <div className="mt-2 pt-2 border-t border-[#222226] flex items-center justify-between text-[10px] text-[#52525b]">
+          <div className="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] text-[#52525b]">
             <span>&copy; {new Date().getFullYear()} image.soook.fr</span>
-            <span className="flex items-center gap-1 text-[#87ea5c]/80">
+            <span className="flex items-center gap-1 text-[#87ea5c]">
               <ShieldCheck className="w-3 h-3" />
               <span>RGPD &amp; SSL</span>
             </span>
@@ -779,19 +775,19 @@ export default function Home() {
       {/* Main Interactive Stage / Canvas (OpenDesign Grid) */}
       <main className="flex-1 relative flex flex-col opendesign-canvas-grid overflow-hidden min-h-[50vh] lg:min-h-0 shrink-0">
         
-        {/* Floating Canvas Toolstrip Dock */}
-        <div className="absolute top-4 right-4 z-30 flex items-center gap-2 bg-[#18181b]/90 backdrop-blur-md border border-[#2c2c31] px-3 py-1.5 rounded-xl shadow-lg">
-          <span className="text-[11px] font-mono text-[#a1a1aa] flex items-center gap-1.5">
+        {/* Floating Canvas Toolstrip Dock — HeroUI Card */}
+        <div className="absolute top-4 right-4 z-30 flex items-center gap-2.5 heroui-card px-3.5 py-1.5 shadow-xl">
+          <span className="heroui-chip heroui-chip-primary text-[10px] py-0.5 px-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c]" />
             {aspectRatio.label}
           </span>
-          <span className="w-px h-3.5 bg-[#2c2c31]" />
-          <span className="text-[11px] font-mono text-[#71717a] uppercase">
+          <span className="w-px h-3.5 bg-white/10" />
+          <span className="heroui-chip heroui-chip-default text-[10px] py-0.5 px-2 font-mono uppercase">
             {resolution.value}
           </span>
           {resultUrl && (
             <>
-              <span className="w-px h-3.5 bg-[#2c2c31]" />
+              <span className="w-px h-3.5 bg-white/10" />
               <DownloadMenu
                 url={resultUrl}
                 filenameBase="openimage-artifact"
@@ -800,27 +796,27 @@ export default function Home() {
               />
               <button
                 onClick={() => setIsFullscreen(true)}
-                className="p-1 rounded text-[#a1a1aa] hover:text-[#fafafa] hover:bg-[#242429] transition-colors"
+                className="heroui-btn heroui-btn-light p-1.5 text-[#a1a1aa] hover:text-[#fafafa]"
                 title="Fullscreen Preview"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
               </button>
             </>
           )}
-          <span className="w-px h-3.5 bg-[#2c2c31]" />
+          <span className="w-px h-3.5 bg-white/10" />
           <button
             onClick={() => setIsRecentOpen((prev) => !prev)}
-            className={`px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors ${
+            className={`heroui-btn ${
               isRecentOpen
-                ? "bg-[#242429] text-[#fafafa] border border-[#3f3f46]"
-                : "text-[#a1a1aa] hover:text-[#fafafa] hover:bg-[#202024]"
-            }`}
+                ? "heroui-btn-flat !border-[#87ea5c]/40 text-[#87ea5c]"
+                : "heroui-btn-light text-[#a1a1aa] hover:text-[#fafafa]"
+            } text-xs py-1 px-2.5 gap-1.5`}
             title={isRecentOpen ? "Hide Recent Generations Panel" : "Show Recent Generations Panel"}
           >
             <Clock className="w-3.5 h-3.5 text-[#87ea5c]" />
             <span className="hidden sm:inline">Recent</span>
             {recentGenerations.length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-semibold bg-[#87ea5c]/15 text-[#87ea5c] border border-[#87ea5c]/30">
+              <span className="heroui-chip heroui-chip-primary text-[9px] py-0.2 px-1.5 font-mono">
                 {recentGenerations.length}
               </span>
             )}
@@ -843,7 +839,7 @@ export default function Home() {
                 <div className="relative w-24 h-24 mx-auto group">
                   {/* Subtle radial aura */}
                   <div className="absolute inset-0 bg-[#87ea5c]/10 blur-[35px] rounded-full" />
-                  <div className="relative w-full h-full bg-[#18181b] border border-[#2c2c31] rounded-2xl flex items-center justify-center shadow-md">
+                  <div className="relative w-full h-full heroui-card flex items-center justify-center shadow-lg border border-white/15">
                     <Wand2 className="w-9 h-9 text-[#87ea5c]" />
                     {/* Corner alignment crosshairs */}
                     <span className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-[#87ea5c]/60" />
@@ -872,32 +868,32 @@ export default function Home() {
                     onClick={() => {
                       setPrompt("Futuristic architecture in neon dusk, glass and cedar, editorial photography");
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#18181b] border border-[#2c2c31] hover:border-[#87ea5c]/40 text-[11px] text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
+                    className="heroui-btn heroui-btn-flat text-[11px] py-1.5 px-3.5 gap-2 text-[#a1a1aa] hover:text-[#fafafa] hover:border-[#87ea5c]/40"
                   >
-                    <Sparkles className="w-3 h-3 text-[#87ea5c]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#87ea5c]" />
                     <span>Try: Architecture in Neon Dusk</span>
                   </button>
                 </div>
 
-                {/* Direct Links & Transparency Matrix (Google SEO & Quick Navigation) */}
-                <div className="pt-5 border-t border-[#26262b]/80">
-                  <div className="flex items-center justify-between mb-2 px-0.5">
+                {/* Direct Links & Transparency Matrix — HeroUI Cards */}
+                <div className="pt-5 border-t border-white/10">
+                  <div className="flex items-center justify-between mb-2.5 px-0.5">
                     <span className="text-[10px] uppercase font-bold text-[#71717a] tracking-wider">
                       Navigation &amp; Informations Légales
                     </span>
-                    <span className="text-[10px] text-[#87ea5c] font-medium flex items-center gap-1">
+                    <span className="heroui-chip heroui-chip-primary text-[10px] py-0.5 px-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c]" />
                       image.soook.fr
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-left">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-left">
                     <Link
                       href="/privacy"
-                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                      className="heroui-card heroui-card-glow p-3 group flex flex-col justify-between"
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <ShieldCheck className="w-4 h-4 text-[#87ea5c]" />
-                        <span className="text-[9px] font-mono font-medium text-[#87ea5c] bg-[#87ea5c]/10 px-1.5 py-0.5 rounded">
+                        <span className="heroui-chip heroui-chip-primary text-[9px] py-0.2 px-1 font-mono">
                           RGPD
                         </span>
                       </div>
@@ -909,11 +905,11 @@ export default function Home() {
 
                     <Link
                       href="/terms"
-                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                      className="heroui-card heroui-card-glow p-3 group flex flex-col justify-between"
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <FileText className="w-4 h-4 text-[#87ea5c]" />
-                        <span className="text-[9px] font-mono text-[#a1a1aa] bg-[#222226] px-1.5 py-0.5 rounded">
+                        <span className="heroui-chip heroui-chip-default text-[9px] py-0.2 px-1 font-mono">
                           CGU
                         </span>
                       </div>
@@ -925,11 +921,11 @@ export default function Home() {
 
                     <Link
                       href="/pricing"
-                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                      className="heroui-card heroui-card-glow p-3 group flex flex-col justify-between"
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <Zap className="w-4 h-4 text-[#87ea5c]" />
-                        <span className="text-[9px] font-mono text-[#a1a1aa] bg-[#222226] px-1.5 py-0.5 rounded">
+                        <span className="heroui-chip heroui-chip-primary text-[9px] py-0.2 px-1 font-mono">
                           Packs
                         </span>
                       </div>
@@ -941,11 +937,11 @@ export default function Home() {
 
                     <Link
                       href="/gallery"
-                      className="p-2.5 rounded-xl bg-[#18181b] hover:bg-[#202024] border border-[#2c2c31] hover:border-[#87ea5c]/50 transition-all group flex flex-col justify-between"
+                      className="heroui-card heroui-card-glow p-3 group flex flex-col justify-between"
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <ImageIcon className="w-4 h-4 text-[#87ea5c]" />
-                        <span className="text-[9px] font-mono text-[#a1a1aa] bg-[#222226] px-1.5 py-0.5 rounded">
+                        <span className="heroui-chip heroui-chip-default text-[9px] py-0.2 px-1 font-mono">
                           Expo
                         </span>
                       </div>
@@ -976,9 +972,9 @@ export default function Home() {
                 key="error"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="max-w-md w-full p-8 bg-[#18181b] border border-red-500/30 rounded-2xl text-center space-y-4 shadow-xl"
+                className="max-w-md w-full p-8 heroui-card border border-red-500/30 text-center space-y-4 shadow-xl"
               >
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-medium">
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                   Execution Failed
                 </div>
@@ -987,20 +983,20 @@ export default function Home() {
                 </p>
                 <button
                   onClick={handleGenerate}
-                  className="px-4 py-2 bg-[#222226] hover:bg-[#2c2c31] border border-[#3f3f46] rounded-lg text-xs font-semibold text-[#fafafa] transition-colors"
+                  className="heroui-btn heroui-btn-flat text-xs font-semibold"
                 >
                   Retry Operation
                 </button>
               </motion.div>
             )}
 
-            {/* Result Rendered Artifact Display */}
+            {/* Result Rendered Artifact Display — HeroUI Card */}
             {resultUrl && !loading && (
               <motion.div
                 key="result"
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="relative group rounded-2xl overflow-hidden border border-[#2c2c31] bg-[#18181b] shadow-2xl max-w-full"
+                className="relative group rounded-2xl overflow-hidden border border-white/10 heroui-card shadow-2xl max-w-full"
               >
                 <img
                   src={resultUrl}
@@ -1009,17 +1005,17 @@ export default function Home() {
                   onClick={() => setIsFullscreen(true)}
                 />
 
-                {/* OpenDesign Result Overlay Bar */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#121214] via-[#121214]/85 to-transparent p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between gap-4">
+                {/* HeroUI Result Overlay Bar */}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#121214] via-[#121214]/90 to-transparent p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between gap-4">
                   <div className="space-y-1.5 max-w-[60%]">
                     <p className="text-xs font-semibold text-[#fafafa] truncate">
                       {prompt || "Generated Artifact"}
                     </p>
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded bg-[#242429] text-[10px] font-mono text-[#a1a1aa] border border-[#3f3f46]">
+                      <span className="heroui-chip heroui-chip-primary text-[10px] py-0.5 px-2">
                         {aspectRatio.label}
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-[#242429] text-[10px] font-mono text-[#a1a1aa] uppercase border border-[#3f3f46]">
+                      <span className="heroui-chip heroui-chip-default text-[10px] py-0.5 px-2 font-mono uppercase">
                         {resolution.value}
                       </span>
                     </div>
@@ -1031,7 +1027,7 @@ export default function Home() {
                         setImagesList([resultUrl]);
                         handleModeChange("edit");
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-[#242429] hover:bg-[#2c2c31] border border-[#3f3f46] text-xs font-medium text-[#fafafa] flex items-center gap-1.5 transition-colors"
+                      className="heroui-btn heroui-btn-flat text-xs py-1.5 px-3 gap-1.5"
                       title="Send to Remix/Edit"
                     >
                       <RefreshCw className="w-3.5 h-3.5 text-[#87ea5c]" />
@@ -1051,8 +1047,8 @@ export default function Home() {
           </AnimatePresence>
         </div>
 
-        {/* Canvas Bottom Bar / Discoverability & Legal Bar */}
-        <footer className="relative z-20 w-full border-t border-[#26262b] bg-[#141417]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs text-[#71717a] shrink-0">
+        {/* Canvas Bottom Bar / Discoverability & Legal Bar — HeroUI Design */}
+        <footer className="relative z-20 w-full border-t border-white/10 bg-[#141417]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs text-[#71717a] shrink-0">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#87ea5c]" />
             <span className="text-[11px] font-medium text-[#a1a1aa]">
@@ -1075,16 +1071,16 @@ export default function Home() {
             </Link>
             <Link
               href="/privacy"
-              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors font-medium flex items-center gap-1"
+              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors font-medium flex items-center gap-1.5"
             >
-              <ShieldCheck className="w-3 h-3 text-[#87ea5c]" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[#87ea5c]" />
               Politique de Confidentialité
             </Link>
             <Link
               href="/terms"
-              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors font-medium flex items-center gap-1"
+              className="text-[#a1a1aa] hover:text-[#87ea5c] transition-colors font-medium flex items-center gap-1.5"
             >
-              <FileText className="w-3 h-3 text-[#87ea5c]" />
+              <FileText className="w-3.5 h-3.5 text-[#87ea5c]" />
               Conditions d&apos;Utilisation
             </Link>
           </nav>

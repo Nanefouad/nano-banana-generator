@@ -70,12 +70,12 @@ export default function DownloadMenu({
 
   const getButtonStyles = () => {
     if (variant === "primary") {
-      return "bg-[#87ea5c] hover:bg-[#78d84f] text-[#09090b] font-semibold text-xs px-3 py-1.5 rounded-lg shadow-sm";
+      return "heroui-btn heroui-btn-solid-primary text-xs py-1.5 px-3";
     }
     if (variant === "toolbar") {
-      return "bg-[#242429] hover:bg-[#2c2c31] text-[#fafafa] border border-[#3f3f46] text-xs font-medium px-2.5 py-1.5 rounded-lg";
+      return "heroui-btn heroui-btn-flat text-xs py-1 px-2.5";
     }
-    return "bg-[#18181b] hover:bg-[#222226] text-[#fafafa] border border-[#2c2c31] text-xs font-medium px-3 py-1.5 rounded-lg";
+    return "heroui-btn heroui-btn-bordered text-xs py-1.5 px-3";
   };
 
   return (
@@ -84,7 +84,7 @@ export default function DownloadMenu({
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         disabled={!!exportingFormat || !url}
-        className={`flex items-center gap-1.5 transition-colors disabled:opacity-50 ${getButtonStyles()}`}
+        className={`flex items-center gap-1.5 transition-all disabled:opacity-50 ${getButtonStyles()}`}
         title="Export image in different formats"
       >
         {exportingFormat ? (
@@ -106,32 +106,32 @@ export default function DownloadMenu({
         <div
           className={`absolute z-50 right-0 ${
             placement === "top" ? "bottom-full mb-2" : "top-full mt-2"
-          } w-64 rounded-xl bg-[#18181b] border border-[#2c2c31] shadow-2xl p-1.5 space-y-1 text-left backdrop-blur-xl animate-scale-up`}
+          } w-64 heroui-card heroui-popover shadow-2xl p-2 space-y-1 text-left backdrop-blur-2xl animate-scale-up`}
         >
-          <div className="px-2.5 py-1.5 border-b border-[#26262b] flex items-center justify-between">
+          <div className="px-2.5 py-1.5 border-b border-white/10 flex items-center justify-between">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-[#a1a1aa]">
               Export Format
             </span>
-            <span className="text-[10px] font-mono text-[#87ea5c]">
+            <span className="heroui-chip heroui-chip-primary text-[9px] py-0.2 px-1.5 font-mono">
               Direct Save
             </span>
           </div>
 
-          <div className="space-y-1">
+          <div className="space-y-1 pt-1">
             {EXPORT_FORMATS.map((fmt) => (
               <button
                 key={fmt.id}
                 type="button"
                 onClick={() => handleExport(fmt.id)}
                 disabled={!!exportingFormat}
-                className="w-full flex items-center justify-between p-2 rounded-lg text-left hover:bg-[#242429] text-[#fafafa] transition-colors group cursor-pointer"
+                className="w-full flex items-center justify-between p-2 rounded-xl text-left hover:bg-white/10 text-[#fafafa] transition-colors group cursor-pointer"
               >
                 <div className="space-y-0.5">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold text-[#fafafa] group-hover:text-[#87ea5c] transition-colors">
                       {fmt.name}
                     </span>
-                    <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-medium bg-[#242429] group-hover:bg-[#18181b] text-[#a1a1aa] border border-[#3f3f46]">
+                    <span className="heroui-chip heroui-chip-default text-[9px] py-0.2 px-1 font-mono">
                       {fmt.badge}
                     </span>
                   </div>

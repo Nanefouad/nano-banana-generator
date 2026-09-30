@@ -147,25 +147,25 @@ export default function PrivacyPage() {
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-medium text-[#a1a1aa] hover:text-[#87ea5c] transition-colors"
+              className="heroui-btn heroui-btn-flat text-xs py-1.5 px-3 gap-2 text-[#a1a1aa] hover:text-[#fafafa]"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Retour au Studio OpenImage</span>
+              <span>Retour au Studio</span>
             </Link>
 
             <Link
               href="/terms"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-[#87ea5c] hover:underline"
+              className="heroui-btn heroui-btn-light text-xs py-1.5 px-3 gap-1.5 text-[#87ea5c] hover:text-[#87ea5c]"
             >
               <FileText className="w-3.5 h-3.5" />
-              <span>Consulter les Conditions d&apos;Utilisation</span>
+              <span>Conditions d&apos;Utilisation</span>
             </Link>
           </div>
 
-          <div className="space-y-3 border-b border-[#26262b] pb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#18181b] border border-[#2c2c31] rounded-full">
+          <div className="space-y-3 border-b border-white/10 pb-8">
+            <div className="inline-flex items-center gap-2 heroui-chip heroui-chip-primary text-xs py-1 px-3">
               <Shield className="w-3.5 h-3.5 text-[#87ea5c]" />
-              <span className="text-[10px] font-mono font-medium text-[#87ea5c] uppercase tracking-wider">
+              <span className="font-mono font-medium uppercase tracking-wider">
                 Protection des Données &bull; Norme RGPD / GDPR
               </span>
             </div>
@@ -179,35 +179,35 @@ export default function PrivacyPage() {
           </div>
         </header>
 
-        {/* TL;DR Summary Box for High Google E-E-A-T & User Experience */}
+        {/* TL;DR Summary Box for High Google E-E-A-T & User Experience — HeroUI Card */}
         <section
           aria-label="Résumé de la politique"
-          className="bg-[#18181b]/90 border border-[#87ea5c]/30 rounded-2xl p-5 sm:p-6 space-y-3 shadow-lg shadow-[#87ea5c]/5"
+          className="heroui-card p-5 sm:p-6 space-y-3 border-[#87ea5c]/30 shadow-lg shadow-[#87ea5c]/5"
         >
           <div className="flex items-center gap-2 text-[#87ea5c] font-semibold text-xs sm:text-sm uppercase tracking-wider font-mono">
             <CheckCircle2 className="w-4 h-4" />
             <span>En résumé : vos garanties de confidentialité</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#a1a1aa] pt-1">
-            <div className="bg-[#121214] p-3.5 rounded-xl border border-[#26262b] space-y-1">
+            <div className="heroui-card p-3.5 space-y-1 bg-[#121214]/80">
               <span className="text-[#fafafa] font-semibold block">Zéro revente de données</span>
               <p>Vos prompts, créations et coordonnées ne sont jamais vendus ni commercialisés à des régies publicitaires.</p>
             </div>
-            <div className="bg-[#121214] p-3.5 rounded-xl border border-[#26262b] space-y-1">
+            <div className="heroui-card p-3.5 space-y-1 bg-[#121214]/80">
               <span className="text-[#fafafa] font-semibold block">Sécurité BYOK étanche</span>
               <p>Vos clés d&apos;API personnelles restent chiffrées et ne servent qu&apos;à l&apos;exécution directe de vos requêtes.</p>
             </div>
-            <div className="bg-[#121214] p-3.5 rounded-xl border border-[#26262b] space-y-1">
+            <div className="heroui-card p-3.5 space-y-1 bg-[#121214]/80">
               <span className="text-[#fafafa] font-semibold block">Conformité RGPD totale</span>
               <p>Droit d&apos;accès, de téléchargement et d&apos;effacement immédiat de l&apos;ensemble de vos créations et comptes.</p>
             </div>
           </div>
         </section>
 
-        {/* Table of contents for SEO & Anchor Navigation */}
+        {/* Table of contents for SEO & Anchor Navigation — HeroUI Card */}
         <nav
           aria-label="Sommaire de la politique de confidentialité"
-          className="bg-[#121214] border border-[#2c2c31] rounded-2xl p-5 space-y-3"
+          className="heroui-card p-5 space-y-3"
         >
           <h2 className="text-xs uppercase font-mono tracking-wider text-[#a1a1aa] font-bold">
             Sommaire des chapitres
